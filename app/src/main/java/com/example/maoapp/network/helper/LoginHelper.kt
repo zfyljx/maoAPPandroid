@@ -1,0 +1,9 @@
+package com.example.maoapp.network.helper
+
+import com.example.maoapp.model.apiBean.UserApiBean
+import com.example.maoapp.network.api.LoginService
+import io.reactivex.Flowable
+
+class LoginHelper(private val mLoginService: LoginService) {
+    fun login(phoneNumber:String,password:String): Flowable<UserApiBean> = mLoginService.login(phoneNumber, password)
+}

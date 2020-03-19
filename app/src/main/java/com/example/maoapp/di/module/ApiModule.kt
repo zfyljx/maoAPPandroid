@@ -2,6 +2,8 @@ package com.example.maoapp.di.module
 
 import com.example.maoapp.di.qualifier.AppUrl
 import com.example.maoapp.network.api.ApiService
+import com.example.maoapp.network.api.LoginService
+import com.example.maoapp.network.helper.LoginHelper
 import com.example.maoapp.network.helper.OkHttpHelper
 import com.example.maoapp.network.helper.RetrofitHelper
 import com.example.maoapp.network.support.ApiConstants
@@ -40,6 +42,12 @@ class ApiModule {
         return RetrofitHelper(apiService)
     }
 
+    @Provides
+    @Singleton
+    fun provideLoginHelper(apiService: LoginService): LoginHelper {
+        return LoginHelper(apiService)
+    }
+
     @Singleton
     @Provides
     @AppUrl
@@ -51,5 +59,12 @@ class ApiModule {
     @Provides
     fun provideApiService(@AppUrl retrofit: Retrofit): ApiService {
         return retrofit.create(ApiService::class.java)
+    }
+
+
+    @Singleton
+    @Provides
+    fun provideLoginService(@AppUrl retrofit: Retrofit): LoginService {
+        return retrofit.create(LoginService::class.java)
     }
 }
