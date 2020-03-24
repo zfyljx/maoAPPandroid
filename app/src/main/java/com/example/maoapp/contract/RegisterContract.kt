@@ -9,7 +9,13 @@ interface RegisterContract {
 //        fun showDiscoveryBean(mDiscoveryCommentBean: DiscoveryCommentBean)
 
         fun showSetTag(tagSuccessBean: UserApiBean)
+        fun showToast(meg:String)
         fun navigateToMain()
+        fun showSendVerificationResult(result: Boolean)
+        fun showCodeVerificationResult(result: Boolean)
+        fun showUserNameIsOnly(result: Boolean)
+        fun showPhoneNumberIsOnly(result: Boolean)
+        fun showCodeResult(result: Boolean)
     }
 
     interface Presenter<in T> : BaseContract.BasePresenter<T> {
@@ -20,6 +26,10 @@ interface RegisterContract {
          */
 //        fun getRegionTagTypeBean(tagId: ArrayList<Int>)
         fun mobilePhoneNumberVerification(phoneNumber:String)
-        fun registerUser(userName:String, phoneNumber:String, password:String)
+        fun registerUser(userName:String, phoneNumber:String, password:String,code:String)
+        fun phoneNumberIsOnly(phoneNumber: String,code: String)
+        fun userNameIsOnly(userName: String)
+//        fun verifyCode(code:String,phoneNumber: String)
+
     }
 }

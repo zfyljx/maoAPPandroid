@@ -45,4 +45,10 @@ class LoginPresenter@Inject constructor(private val mLoginHelper: LoginHelper) :
         addSubscribe(subscriber)
     }
 
+
+   private fun observeStatus(data:UserApiBean){
+       if (data.status.equals("200")){
+
+       }
+   }
 }

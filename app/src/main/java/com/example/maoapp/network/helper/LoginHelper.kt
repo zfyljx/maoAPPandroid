@@ -8,4 +8,8 @@ class LoginHelper(private val mLoginService: LoginService) {
     fun login(phoneNumber:String,password:String): Flowable<UserApiBean> = mLoginService.login(phoneNumber, password)
 
     fun register(userName:String, phoneNumber:String, password:String):Flowable<UserApiBean> = mLoginService.resterUser(userName, phoneNumber, password)
+
+    fun phoneNumberIsOnly(phoneNumber:String):Flowable<UserApiBean> = mLoginService.phoneNumberIsOnly(phoneNumber)
+
+    fun userNameIsOnly(userName:String):Flowable<UserApiBean> = mLoginService.userNameIsOnly(userName)
 }

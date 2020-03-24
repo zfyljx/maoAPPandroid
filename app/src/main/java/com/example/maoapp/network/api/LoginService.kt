@@ -17,4 +17,10 @@ interface LoginService {
 
     @POST("/postandroidregister")
     fun resterUser(@Query("userName")userName:String,@Query("phoneNumber")phoneNumber:String, @Query("password")password:String):Flowable<UserApiBean>
+
+    @GET("/getandroidphonenumberisonly")
+    fun phoneNumberIsOnly(@Query("phoneNumber")phoneNumber:String):Flowable<UserApiBean>
+
+    @GET("getandroidusernameisonly")
+    fun userNameIsOnly(@Query("userName")userName:String):Flowable<UserApiBean>
 }

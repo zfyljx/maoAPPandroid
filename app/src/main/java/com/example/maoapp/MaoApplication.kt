@@ -2,6 +2,7 @@ package com.example.maoapp
 
 import android.app.Activity
 import android.app.Application
+import androidx.multidex.MultiDex
 import com.example.maoapp.di.component.ApiComponent
 import com.example.maoapp.di.component.DaggerApiComponent
 import com.example.maoapp.di.module.ApiModule
@@ -9,6 +10,7 @@ import com.example.maoapp.utils.AppUtils
 import com.example.maoapp.utils.CrashHandler
 import com.example.maoapp.utils.LogUtils
 import com.example.maoapp.utils.NetworkUtils
+import com.mob.MobSDK
 
 class MaoApplication :Application(){
 
@@ -27,6 +29,8 @@ class MaoApplication :Application(){
         initNetwork()
         initCrashHandler()
         initLog()
+        MultiDex.install(this);
+        MobSDK.init(this);
     }
 
     companion object {
