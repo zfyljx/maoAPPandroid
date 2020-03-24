@@ -6,4 +6,6 @@ import io.reactivex.Flowable
 
 class LoginHelper(private val mLoginService: LoginService) {
     fun login(phoneNumber:String,password:String): Flowable<UserApiBean> = mLoginService.login(phoneNumber, password)
+
+    fun register(userName:String, phoneNumber:String, password:String):Flowable<UserApiBean> = mLoginService.resterUser(userName, phoneNumber, password)
 }

@@ -1,13 +1,15 @@
 package com.example.maoapp.contract
 
 import com.example.maoapp.base.BaseContract
+import com.example.maoapp.model.apiBean.UserApiBean
 
 interface RegisterContract {
     interface View : BaseContract.BaseView {
 
 //        fun showDiscoveryBean(mDiscoveryCommentBean: DiscoveryCommentBean)
 
-//        fun showSetTag(tagSuccessBean: TagSuccessBean)
+        fun showSetTag(tagSuccessBean: UserApiBean)
+        fun navigateToMain()
     }
 
     interface Presenter<in T> : BaseContract.BasePresenter<T> {
@@ -17,5 +19,7 @@ interface RegisterContract {
          * @return
          */
 //        fun getRegionTagTypeBean(tagId: ArrayList<Int>)
+        fun mobilePhoneNumberVerification(phoneNumber:String)
+        fun registerUser(userName:String, phoneNumber:String, password:String)
     }
 }

@@ -10,6 +10,7 @@ interface LoginContract {
 
 //        fun showSetTag(tagSuccessBean: TagSuccessBean)
         fun showToast(tag:UserApiBean)
+        fun navigateToMain()
     }
 
     interface Presenter<in T> : BaseContract.BasePresenter<T> {

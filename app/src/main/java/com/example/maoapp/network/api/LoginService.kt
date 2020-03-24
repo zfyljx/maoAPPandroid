@@ -3,6 +3,7 @@ package com.example.maoapp.network.api
 import com.example.maoapp.model.apiBean.UserApiBean
 import io.reactivex.Flowable
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface LoginService {
@@ -13,4 +14,7 @@ interface LoginService {
 
     @GET("/getandroidlogin")
     fun login(@Query("phoneNumber")phoneNumber:String, @Query("password")password:String): Flowable<UserApiBean>
+
+    @POST("/postandroidregister")
+    fun resterUser(@Query("userName")userName:String,@Query("phoneNumber")phoneNumber:String, @Query("password")password:String):Flowable<UserApiBean>
 }
