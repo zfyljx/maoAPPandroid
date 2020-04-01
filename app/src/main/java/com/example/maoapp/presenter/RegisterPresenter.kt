@@ -3,6 +3,7 @@ package com.example.maoapp.presenter
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
+import android.util.Log
 import cn.smssdk.EventHandler
 import cn.smssdk.SMSSDK
 import com.example.maoapp.base.BaseSubscriber
@@ -22,6 +23,7 @@ class RegisterPresenter @Inject constructor(private val mLoginHelper: LoginHelpe
      */
     val country="86"
 
+    val mHandler=Handler()
     val eh = object : EventHandler() {
         override fun afterEvent(event: Int, result: Int, data: Any?) {
             // TODO 此处不可直接处理UI线程，处理后续操作需传到主线程中操作
@@ -31,17 +33,23 @@ class RegisterPresenter @Inject constructor(private val mLoginHelper: LoginHelpe
             msg.obj = data
             Handler(Looper.getMainLooper(), Handler.Callback {msg ->
 
+                Log.d("GGGGGGGGGG",msg.toString())
+                Log.d("hhhhh", msg.data.toString())
                 if (msg.arg1 == SMSSDK.EVENT_GET_VERIFICATION_CODE){
                     if (msg.arg2 == SMSSDK.RESULT_COMPLETE){
                       mView?.showSendVerificationResult(true)
                     }else{
+                        mView?.showToast("验证码发送失败")
                         mView?.showSendVerificationResult(false)
+
                     }
                 }else if (msg.arg1 ==SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE){
                     if (msg.arg2 ==SMSSDK.RESULT_COMPLETE){
-                        mView?.showCodeResult(true)
+                        mView?.showToast("验证码验证成功")
+                        mView?.showCodeVerificationResult(false)
                     }else{
-                        mView?.showCodeResult(false)
+                        mView?.showToast("验证码验证失败是黑白失败")
+                        mView?.showCodeVerificationResult(true)
                     }
                 }
 
@@ -54,13 +62,18 @@ class RegisterPresenter @Inject constructor(private val mLoginHelper: LoginHelpe
 //注册一个事件回调监听，用于处理SMSSDK接口请求的结果
         SMSSDK.registerEventHandler(eh)
         // 请求验证码，其中country表示国家代码，如“86”；phone表示手机号码，如“13800138000”
-        SMSSDK.getVerificationCode(country, phoneNumber)
+        try{
+            SMSSDK.getVerificationCode(country, phoneNumber)
+        }catch (e:Exception){
+            Log.d("HHHHHHHHHHHH",e.message)
+        }
 
-        mView?.showToast("验证码发送成功")
+
+//        mView?.showToast("验证码发送成功")
+
     }
 
-    override fun registerUser(userName: String, phoneNumber: String, password: String,code:String) {
-        verifyCode(phoneNumber,code)
+    override fun registerUser(userName: String, phoneNumber: String, password: String) {
         val subscriber = mLoginHelper.register(userName, phoneNumber, password)
             .compose(rxSchedulerHelper())
             .subscribeWith(object : BaseSubscriber<UserApiBean>(mView) {
@@ -79,7 +92,7 @@ class RegisterPresenter @Inject constructor(private val mLoginHelper: LoginHelpe
         SMSSDK.unregisterEventHandler(eh)
     }
 
-    private fun verifyCode(phoneNumber: String,code: String){
+    override fun verifyCode(phoneNumber: String,code: String){
         SMSSDK.submitVerificationCode(country,phoneNumber,code)
     }
 
@@ -88,11 +101,11 @@ class RegisterPresenter @Inject constructor(private val mLoginHelper: LoginHelpe
             .compose(rxSchedulerHelper())
             .subscribeWith(object : BaseSubscriber<UserApiBean>(mView) {
                 override fun onSuccess(mData: UserApiBean) {
-                    if (mData.status.equals("200")){
-                        mView?.showPhoneNumberIsOnly(true)
-                        verifyCode(phoneNumber, code)
-                    }else{
+                    if (mData.status == 200){
                         mView?.showPhoneNumberIsOnly(false)
+//                        verifyCode(phoneNumber, code)
+                    }else{
+                        mView?.showPhoneNumberIsOnly(true)
                     }
                 }
             })
@@ -104,14 +117,16 @@ class RegisterPresenter @Inject constructor(private val mLoginHelper: LoginHelpe
             .compose(rxSchedulerHelper())
             .subscribeWith(object : BaseSubscriber<UserApiBean>(mView) {
                 override fun onSuccess(mData: UserApiBean) {
-                   if (mData.status.equals("200")){
-                       mView?.showUserNameIsOnly(true)
-                   }else{
+                   if (mData.status == 200){
                        mView?.showUserNameIsOnly(false)
+                   }else{
+                       mView?.showUserNameIsOnly(true)
                    }
                 }
             })
         addSubscribe(subscriber)
     }
+
+
 
 }

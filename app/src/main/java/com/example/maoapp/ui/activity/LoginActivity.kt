@@ -2,6 +2,7 @@ package com.example.maoapp.ui.activity
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import com.example.maoapp.MainActivity
 import com.example.maoapp.R
@@ -57,7 +58,8 @@ class LoginActivity : BaseInjectActivity<LoginPresenter>(), LoginContract.View{
 
 
     override fun showToast(tag: UserApiBean) {
-        if (tag.status.equals("200")){
+        Log.d("TTTTTTTT",tag.toString())
+        if (tag.status == 200){
             ToastUtils.showToast("登陆成功")
             val userProfile=getSharedPreferences("userProfile",Context.MODE_PRIVATE)
             val edit=userProfile.edit()
@@ -68,7 +70,7 @@ class LoginActivity : BaseInjectActivity<LoginPresenter>(), LoginContract.View{
 
             val intent=Intent(this@LoginActivity,MainActivity::class.java)
             startActivity(intent)
-        }else if (tag.status.equals("203")){
+        }else if (tag.status == 203){
             createSnackBar(login_password,"密码错误")
         }else{
             createSnackBar(login_username,"手机号未注册")

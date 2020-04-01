@@ -23,8 +23,8 @@ class RegisterActivity : BaseInjectActivity<RegisterPresenter>(), RegisterContra
 
 
     lateinit var mHandler:Handler
-    var checkUsername=false
-    var checkPhoneNumber=false
+    var checkUsername=true
+    var checkPhoneNumber=true
     var checkCode=false
     override fun getLayoutId(): Int=R.layout.activity_register
     override fun initInject()=activityComponent.inject(this)
@@ -36,14 +36,15 @@ class RegisterActivity : BaseInjectActivity<RegisterPresenter>(), RegisterContra
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 if (register_phone_number.length() == 11){
                     register_get_verification_code.visibility= View.VISIBLE
                 }else{
                     register_get_verification_code.visibility= View.INVISIBLE
                 }
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
         })
 
@@ -79,19 +80,25 @@ class RegisterActivity : BaseInjectActivity<RegisterPresenter>(), RegisterContra
             mHandler=Handler(){
              when(it.what){
                   1 -> mPresenter.phoneNumberIsOnly(register_phone_number.text.toString().trim(),register_verification_code.text.toString().trim())
-                  2 -> {
+                  2-> mPresenter.verifyCode(register_phone_number.text.toString().trim(),register_verification_code.text.toString().trim())
+                  3 -> {
                       if (checkALLDataBlank()){
+                          ToastUtils.showToast("请填写完成以上内容")
                           createSnackBar(register_password_again,"请填写完成以上内容")
                       }else if (checkUsername){
+                          ToastUtils.showToast("该用户名已被注册")
                           createSnackBar(register_nickname,"该用户名已被注册")
                       }else if (checkPhoneNumber){
+                          ToastUtils.showToast("该手机号已被注册")
                           createSnackBar(register_phone_number,"该手机号已被注册")
-                      }else if (!checkCode){
+                      }else if (checkCode){
+                          ToastUtils.showToast("验证码不正确")
                           createSnackBar(register_verification_code,"验证码不正确")
                       }else if (! register_password_again.text.toString().equals(register_password.text.toString())){
+                          ToastUtils.showToast("两次密码不一样，请重新输入")
                           createSnackBar(register_password_again,"两次密码不一样，请重新输入")
                       }else{
-                          mPresenter.registerUser(register_phone_number.text.toString().trim(),register_phone_number.text.toString().trim(),register_password.text.toString().trim(),register_verification_code.text.toString().trim())
+                          mPresenter.registerUser(register_phone_number.text.toString().trim(),register_phone_number.text.toString().trim(),register_password.text.toString().trim())
                       }
                   }
                  else -> print("message")
@@ -106,7 +113,7 @@ class RegisterActivity : BaseInjectActivity<RegisterPresenter>(), RegisterContra
     }
 
     override fun showSetTag(tag: UserApiBean) {
-        if (tag.status.equals("200")){
+        if (tag.status==200){
             ToastUtils.showToast("注册成功")
             val userProfile=getSharedPreferences("userProfile", Context.MODE_PRIVATE)
             val edit=userProfile.edit()
@@ -133,18 +140,26 @@ class RegisterActivity : BaseInjectActivity<RegisterPresenter>(), RegisterContra
 
     override fun showSendVerificationResult(result: Boolean) {
         if (result){
+            ToastUtils.showToast("验证码发送成功")
             createSnackBar(register_get_verification_code,"验证码发送成功")
         }else{
+            ToastUtils.showToast("验证码发送失败，请检查手机号是否正确")
             createSnackBar(register_get_verification_code,"验证码发送失败，请检查手机号是否正确")
         }
     }
 
     override fun showCodeVerificationResult(result: Boolean) {
-        if (result){
-            createSnackBar(register_get_verification_code,"验证成功")
-        }else{
-            createSnackBar(register_get_verification_code,"验证失败")
-        }
+        checkCode = result
+        val message=Message()
+        message.what=3
+        mHandler.sendMessage(message)
+//        if (result){
+//            ToastUtils.showToast("验证成功")
+//            createSnackBar(register_get_verification_code,"验证成功")
+//        }else{
+//            ToastUtils.showToast("验证失败")
+//            createSnackBar(register_get_verification_code,"验证失败")
+//        }
     }
 
     override fun showUserNameIsOnly(result: Boolean) {

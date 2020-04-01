@@ -26,7 +26,8 @@ interface RegisterContract {
          */
 //        fun getRegionTagTypeBean(tagId: ArrayList<Int>)
         fun mobilePhoneNumberVerification(phoneNumber:String)
-        fun registerUser(userName:String, phoneNumber:String, password:String,code:String)
+        fun verifyCode(phoneNumber: String,code: String)
+        fun registerUser(userName:String, phoneNumber:String, password:String)
         fun phoneNumberIsOnly(phoneNumber: String,code: String)
         fun userNameIsOnly(userName: String)
 //        fun verifyCode(code:String,phoneNumber: String)
