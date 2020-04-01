@@ -98,7 +98,7 @@ class RegisterActivity : BaseInjectActivity<RegisterPresenter>(), RegisterContra
                           ToastUtils.showToast("两次密码不一样，请重新输入")
                           createSnackBar(register_password_again,"两次密码不一样，请重新输入")
                       }else{
-                          mPresenter.registerUser(register_phone_number.text.toString().trim(),register_phone_number.text.toString().trim(),register_password.text.toString().trim())
+                          mPresenter.registerUser(register_nickname.text.toString().trim(),register_phone_number.text.toString().trim(),register_password.text.toString().trim())
                       }
                   }
                  else -> print("message")
