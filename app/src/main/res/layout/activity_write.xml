@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.activity.WriteActivity">
 
 
@@ -14,31 +15,97 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="60dp">
 
             <TextView
                 android:id="@+id/text_write"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
                 android:text="写分享"
-                android:textSize="20dp"
-                >
+                android:layout_marginLeft="120dp"
+                android:gravity="center"
+                android:textColor="@color/darkOrange"
+                android:textSize="20dp">
 
             </TextView>
 
             <Button
+                android:id="@+id/submit_write"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="55dp"
                 android:layout_ali="20dp"
+                android:layout_marginLeft="25dp"
+                android:layout_toRightOf="@id/text_write"
+                android:background="@drawable/bg_border_corner"
                 android:text="发布"
-                android:layout_toRightOf="@id/text_write"></Button>
+                android:textColor="@color/smssdk_common_white"
+                android:textSize="20dp"
+                ></Button>
         </RelativeLayout>
 
 
 
     </LinearLayout>
 
+    <EditText
+        android:id="@+id/write_text"
+        android:layout_width="match_parent"
+        android:layout_height="264dp"
+        android:inputType="textMultiLine"
+        android:background="@drawable/bg_border"></EditText>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <ImageButton
+            android:id="@+id/get_address"
+            android:layout_width="50dp"
+            android:layout_height="match_parent">
+
+        </ImageButton>
+
+        <TextView
+            android:id="@+id/write_address"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="60dp"
+            android:text="详细地址"
+            android:textSize="20dp"
+            android:gravity="bottom">
+
+        </TextView>
+    </RelativeLayout>
+
+    <GridView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="3"
+        android:horizontalSpacing="3dp">
+
+        <ImageView
+            android:id="@+id/pic_one"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            >
+
+        </ImageView>
+
+        <ImageView
+            android:id="@+id/pic_second"
+            android:layout_width="100dp"
+            android:layout_height="100dp">
+
+        </ImageView>
+
+        <ImageView
+            android:id="@+id/pic_three"
+            android:layout_width="100dp"
+            android:layout_height="100dp">
+
+        </ImageView>
+
+    </GridView>
 
 
 
