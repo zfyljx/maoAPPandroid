@@ -1,5 +1,6 @@
 package com.example.maoapp.network.api
 
+import com.example.maoapp.model.apiBean.QiniuToken
 import com.example.maoapp.model.apiBean.UserApiBean
 import io.reactivex.Flowable
 import retrofit2.http.GET
@@ -21,6 +22,9 @@ interface LoginService {
     @GET("/getandroidphonenumberisonly")
     fun phoneNumberIsOnly(@Query("phoneNumber")phoneNumber:String):Flowable<UserApiBean>
 
-    @GET("getandroidusernameisonly")
+    @GET("/getandroidusernameisonly")
     fun userNameIsOnly(@Query("userName")userName:String):Flowable<UserApiBean>
+
+    @GET("/androidgettoken")
+    fun getQiniuUpdateToken():Flowable<QiniuToken>
 }

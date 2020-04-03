@@ -117,4 +117,5 @@ dependencies {
 
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.qw:coco:0.2.3'
+    implementation 'com.qiniu:qiniu-android-sdk:7.2.+'
 }
