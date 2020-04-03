@@ -2,7 +2,6 @@ package com.example.maoapp.ui.activity
 
 import android.Manifest
 import android.annotation.TargetApi
-import android.app.Activity
 import android.content.ContentUris
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -14,6 +13,7 @@ import android.os.Build
 import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -22,6 +22,9 @@ import com.example.maoapp.base.BaseInjectActivity
 import com.example.maoapp.contract.WriteContract
 import com.example.maoapp.presenter.WritePresenter
 import com.example.maoapp.widget.PermissionCheckerDelegate
+import com.qw.photo.CoCo
+import com.qw.photo.callback.GetImageCallBack
+import com.qw.photo.pojo.PickResult
 import kotlinx.android.synthetic.main.activity_write.*
 import java.io.File
 
@@ -76,8 +79,26 @@ class WriteActivity : BaseInjectActivity<WritePresenter>(), WriteContract.View{
 //                    goAlbum()
 //                }
 //            }
-        applyOpenAlbumPermission()
+//        applyOpenAlbumPermission()
 
+        CoCo.with(this)
+            .pick()
+            .apply()
+            .start(object : GetImageCallBack<PickResult> {
+
+                override fun onSuccess(data: PickResult) {
+//                    Toast.makeText(
+//                        this@MainActivity,
+//                        "选择操作最终成功 path: ${data.originUri.path}",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+                    pic_one.setImageURI(data.originUri)
+                }
+
+                override fun onFailed(exception: Exception) {
+                    Toast.makeText(this@WriteActivity, "选择异常: $exception", Toast.LENGTH_SHORT).show()
+                }
+            })
         }
 
 
@@ -161,18 +182,19 @@ class WriteActivity : BaseInjectActivity<WritePresenter>(), WriteContract.View{
 ////            pic_one.setImageURI(Uri.fromFile(File(photoPath)))
 //
 //        }
-        when (requestCode) {
-            OPEN_CAMERA -> {
-                if (resultCode == Activity.RESULT_OK) {
-//                    insertBitmapToList(getBitmapByCamera())
-                }
-            }
-            OPEN_ALBUM -> {
-                if (resultCode ==Activity.RESULT_OK) {
-                    pic_one.setImageBitmap(getBitmapByAlbum(data!!))
-                }
-            }
-        }
+//        when (requestCode) {
+//            OPEN_CAMERA -> {
+//                if (resultCode == Activity.RESULT_OK) {
+////                    insertBitmapToList(getBitmapByCamera())
+//                }
+//            }
+//            OPEN_ALBUM -> {
+//                if (resultCode ==Activity.RESULT_OK) {
+//
+//                    pic_one.setImageBitmap(getBitmapByAlbum(data!!))
+//                }
+//            }
+//        }
 
             //拍照
 //        } else if (requestCode == ACTIVITY_REQUEST_CAMERA && resultCode == Activity.RESULT_OK) {
@@ -193,11 +215,13 @@ class WriteActivity : BaseInjectActivity<WritePresenter>(), WriteContract.View{
     @TargetApi(Build.VERSION_CODES.KITKAT)
     private fun handleImageAfterKitKat(data: Intent) {
         val uri = data.data
+        Log.d("URL",uri.toString())
         //document类型的Uri
         when {
             DocumentsContract.isDocumentUri(mContext, uri) -> {
                 //通过documentId处理
                 val docId = DocumentsContract.getDocumentId(uri)
+                Log.d("URL",docId.toString())
                 when (uri?.authority) {
                     "com.android.externalstorage.documents" -> {
                         val type = docId.split(":")[0]
@@ -277,9 +301,14 @@ class WriteActivity : BaseInjectActivity<WritePresenter>(), WriteContract.View{
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             //7.0适配
+            Log.d("imagePath",imagePath)
             oriUri = FileProvider.getUriForFile(mContext!!, "com.example.maoapp.provider", File(imagePath))
         }
-        return MediaStore.Images.Media.getBitmap(mContext!!.contentResolver, oriUri)
+        Log.d("oriUri",oriUri.toString())
+        pic_three.setImageURI(oriUri)
+        Log.d("BitMaporiUri",MediaStore.Images.Media.getBitmap(mContext!!.contentResolver, oriUri).toString())
+//        return MediaStore.Images.Media.getBitmap(mContext!!.contentResolver, oriUri)
+        return BitmapFactory.decodeStream(contentResolver.openInputStream(oriUri))
     }
 
     /**
