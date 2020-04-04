@@ -64,6 +64,8 @@
         android:layout_width="match_parent"
         android:layout_height="264dp"
         android:inputType="textMultiLine"
+        android:cursorVisible="true"
+        android:textCursorDrawable="@drawable/color_cursor"
         android:background="@drawable/bg_border"></EditText>
 
     <RelativeLayout

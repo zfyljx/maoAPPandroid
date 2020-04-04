@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.maoapp">
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -19,6 +20,12 @@
     <!-- 蓝牙分享所需的权限 -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <!--用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!--用于访问GPS定位-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
 
     <application
         android:name=".MaoApplication"
@@ -67,6 +74,16 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_path" />
         </provider>
+
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="f79c5a4588621faaa90df09b736cae53" />
+        <!-- 定位需要的服务 -->
+        <service android:name="com.amap.api.location.APSService" />
     </application>
+
+
+
+
 
 </manifest>
