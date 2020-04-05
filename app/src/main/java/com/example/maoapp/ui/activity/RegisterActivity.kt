@@ -117,6 +117,7 @@ class RegisterActivity : BaseInjectActivity<RegisterPresenter>(), RegisterContra
             ToastUtils.showToast("注册成功")
             val userProfile=getSharedPreferences("userProfile", Context.MODE_PRIVATE)
             val edit=userProfile.edit()
+            edit.putLong("userId",tag.data.id)
             edit.putString("userName",tag.data.userName)
             edit.putString("phoneNumber",tag.data.phoneNumber)
             edit.putString("description",tag.data.description)

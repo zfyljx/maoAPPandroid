@@ -1,11 +1,11 @@
 package com.example.maoapp.network.api
 
+import com.example.maoapp.model.apiBean.LocationBean
 import com.example.maoapp.model.apiBean.QiniuToken
+import com.example.maoapp.model.apiBean.ResultNoDataBean
 import com.example.maoapp.model.apiBean.UserApiBean
 import io.reactivex.Flowable
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface LoginService {
 
@@ -16,8 +16,9 @@ interface LoginService {
     @GET("/getandroidlogin")
     fun login(@Query("phoneNumber")phoneNumber:String, @Query("password")password:String): Flowable<UserApiBean>
 
+    @FormUrlEncoded
     @POST("/postandroidregister")
-    fun resterUser(@Query("userName")userName:String,@Query("phoneNumber")phoneNumber:String, @Query("password")password:String):Flowable<UserApiBean>
+    fun resterUser(@Field("userName")userName:String, @Field("phoneNumber")phoneNumber:String, @Field("password")password:String):Flowable<UserApiBean>
 
     @GET("/getandroidphonenumberisonly")
     fun phoneNumberIsOnly(@Query("phoneNumber")phoneNumber:String):Flowable<UserApiBean>
@@ -27,4 +28,10 @@ interface LoginService {
 
     @GET("/androidgettoken")
     fun getQiniuUpdateToken():Flowable<QiniuToken>
+    
+    @GET("/getandroidaddressdetail")
+    fun getAddressDetail(@Query("longitude")longitude:String,@Query("latitude")latitude:String):Flowable<LocationBean>
+
+    @POST("/postandroidsaveshare")
+    fun saveShare(@Field("id")id:Long,@Field("message")message:String,@Field("address")address:String,@Field("imageOne")imageOne:String,@Field("imageTwo")imageTwo:String,@Field("imageThree")imageThree:String):Flowable<ResultNoDataBean>
 }

@@ -3,7 +3,9 @@ package com.example.maoapp.presenter
 import com.example.maoapp.base.BaseSubscriber
 import com.example.maoapp.base.RxPresenter
 import com.example.maoapp.contract.WriteContract
+import com.example.maoapp.model.apiBean.LocationBean
 import com.example.maoapp.model.apiBean.QiniuToken
+import com.example.maoapp.model.apiBean.ResultNoDataBean
 import com.example.maoapp.network.helper.LoginHelper
 import com.example.maoapp.utils.rxSchedulerHelper
 import javax.inject.Inject
@@ -18,6 +20,53 @@ class WritePresenter@Inject constructor(private val mLoginHelper: LoginHelper) :
                    if (mData.status == 200){
                        mView?.setToken(mData.data.token)
                    }
+                }
+            })
+        addSubscribe(subscriber)
+    }
+
+    override fun getAdressDetail(longitude: String, latitude: String) {
+        val subscriber = mLoginHelper.getAdressDetail(longitude, latitude)
+            .compose(rxSchedulerHelper())
+            .subscribeWith(object : BaseSubscriber<LocationBean>(mView) {
+                override fun onSuccess(mData: LocationBean) {
+                    if (mData.status == 200){
+                        mView?.setAddressDetail(mData.data.address)
+                    }else{
+                        mView?.showToast("网络定位有问题，请重试")
+                    }
+                }
+
+                override fun onError(e: Throwable) {
+                    super.onError(e)
+                    mView?.showToast("网络定位有问题，请重试")
+                }
+            })
+        addSubscribe(subscriber)
+    }
+
+    override fun uploadShare(
+        id: Long,
+        message: String,
+        address: String,
+        imageOne: String,
+        imageTwo: String,
+        imageThree: String
+    ) {
+        val subscriber = mLoginHelper.upLoadShare(id, message, address, imageOne, imageTwo, imageThree)
+            .compose(rxSchedulerHelper())
+            .subscribeWith(object : BaseSubscriber<ResultNoDataBean>(mView) {
+                override fun onSuccess(mData: ResultNoDataBean) {
+                    if (mData.status == 200){
+                       mView?.showUploadShareResult(true)
+                    }else{
+                        mView?.showUploadShareResult(false)
+                    }
+                }
+
+                override fun onError(e: Throwable) {
+                    super.onError(e)
+                    mView?.showToast("发布失败，请检查网路稍后再试")
                 }
             })
         addSubscribe(subscriber)

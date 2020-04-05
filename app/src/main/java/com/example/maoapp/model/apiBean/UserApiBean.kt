@@ -5,6 +5,12 @@ data class UserApiBean(val status:Int,val message:String,val data: User){
 }
 
 
-data class QiniuToken(val status: Int,var message: String,val data:QiUToken){
+data class QiniuToken(val status: Int,val message: String,val data:QiUToken){
     data class QiUToken(val token:String)
 }
+
+data class LocationBean(val status: Int,val message: String,val data:AddressDetail){
+    data class AddressDetail(val address:String)
+}
+
+data class ResultNoDataBean(val status: Int,val message: String)

@@ -63,6 +63,7 @@ class LoginActivity : BaseInjectActivity<LoginPresenter>(), LoginContract.View{
             ToastUtils.showToast("登陆成功")
             val userProfile=getSharedPreferences("userProfile",Context.MODE_PRIVATE)
             val edit=userProfile.edit()
+            edit.putLong("userId",tag.data.id)
             edit.putString("userName",tag.data.userName)
             edit.putString("phoneNumber",tag.data.phoneNumber)
             edit.putString("description",tag.data.description)

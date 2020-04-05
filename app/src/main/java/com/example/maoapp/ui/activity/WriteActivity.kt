@@ -2,7 +2,9 @@ package com.example.maoapp.ui.activity
 
 //import androidx.core.app.ActivityCompat
 import android.Manifest
-import android.app.Activity
+import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.net.Uri
@@ -11,7 +13,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.core.app.ActivityCompat.checkSelfPermission
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat.requestPermissions
 import androidx.core.content.ContextCompat
 import com.afollestad.assent.Permission
@@ -19,15 +21,15 @@ import com.afollestad.assent.runWithPermissions
 import com.amap.api.location.AMapLocationClient
 import com.amap.api.location.AMapLocationClientOption
 import com.amap.api.location.AMapLocationListener
+import com.example.maoapp.MainActivity
 import com.example.maoapp.R
 import com.example.maoapp.base.BaseInjectActivity
 import com.example.maoapp.contract.WriteContract
-import com.example.maoapp.network.support.ApiConstants
+import com.example.maoapp.model.bean.LocationModel
 import com.example.maoapp.presenter.WritePresenter
 import com.example.maoapp.utils.LocationResultUtils
 import com.example.maoapp.utils.LocationResultUtils.isLocationProviderEnabled
 import com.example.maoapp.utils.ToastUtils
-import com.liulishuo.qiniuimageloader.utils.PicassoLoader
 import com.qiniu.android.storage.UploadManager
 import com.qw.photo.CoCo
 import com.qw.photo.callback.GetImageCallBack
@@ -49,10 +51,12 @@ class WriteActivity : BaseInjectActivity<WritePresenter>(), WriteContract.View{
     private var threeImageUrl=""
     companion object {
         const val WRITE_EXTERNAL_STORAGE = 1
+        const val SELECT_IMAGE_ONE = 1
+        const val SELECT_IMAGE_TWO = 2
+        const val SELECT_IMAGE_THREE = 3
     }
 
-//    private lateinit var qiniuTokenStr:String
-    private var qiniuTokenStr=""
+    private lateinit var qiniuTokenStr:String
     private  val  uploadManager= UploadManager()
     lateinit var uri: Uri
     private val permissionList = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -70,11 +74,9 @@ class WriteActivity : BaseInjectActivity<WritePresenter>(), WriteContract.View{
     override fun initPresenter()=mPresenter.attachView(this)
 
 
-//    @ExperimentalStdlibApi
     override fun initWidget() {
            initMap()
         mPresenter.getQiniuToken()
-//        verfyStoragePermissions(this)
         initLinserter()
 
 
@@ -82,34 +84,6 @@ class WriteActivity : BaseInjectActivity<WritePresenter>(), WriteContract.View{
 
 
 
-    fun verfyStoragePermissions(activity:Activity){
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-
-            val permissionWrite= checkSelfPermission(activity,"android.permission.WRITE_EXTERNAL_STORAGE")
-            val permissionRead = checkSelfPermission(activity,"android.permission.READ_EXTERNAL_STORAGE")
-//            if (permissionRead != PackageManager.PERMISSION_GRANTED){
-//                Log.d("FFFFFFFF","读存储权限不允许")
-//            }else{
-//                Log.d("TTTTTTTTT","读存储权限已允许")
-//            }
-//            if (permissionWrite != PackageManager.PERMISSION_GRANTED ){
-
-
-//            Thread {
-//                Runnable { ActivityCompat.requestPermissions(activity,permissionList,WriteActivity.WRITE_EXTERNAL_STORAGE) }
-//
-//            }.start()
-
-
-//        }else{
-//            Log.d("TTTTTTTTT","写存储权限已允许")
-//            initLinserter()
-//        }
-    }
-    }
-
-//    @ExperimentalStdlibApi
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -142,23 +116,69 @@ when(requestCode){
 
     }
 
-//    @ExperimentalStdlibApi
     private fun initLinserter(){
         pic_one.setOnClickListener {
+            selectImage= SELECT_IMAGE_ONE
             //检查版本是否大于M
             verfyPermissionsToGallery()
-
-
         }
+        pic_second.setOnClickListener {
+            selectImage= SELECT_IMAGE_TWO
+            //检查版本是否大于M
+            verfyPermissionsToGallery()
+        }
+
+        pic_three.setOnClickListener {
+            selectImage= SELECT_IMAGE_THREE
+            //检查版本是否大于M
+            verfyPermissionsToGallery()
+        }
+
+
 
 
     get_address.setOnClickListener {
         locate()
     }
 
+        submit_write.setOnClickListener{
+            submitShare()
+        }
+
+        write_back.setOnClickListener{
+            isBack()
+        }
+
     }
 
-//    @ExperimentalStdlibApi
+    private fun isBack(){
+        val dialog=AlertDialog.Builder(this)
+            .setTitle("放弃编辑")
+            .setIcon(R.drawable.is_back)
+            .setMessage("确定要放弃编辑吗？")
+            .setPositiveButton("确定",DialogInterface.OnClickListener { _, _ ->
+                val intent= Intent(this@WriteActivity, MainActivity::class.java)
+                startActivity(intent)
+            })
+            .setNegativeButton("取消",DialogInterface.OnClickListener { _, _ ->  })
+            .create().show()
+    }
+    private fun submitShare(){
+        if (checkALLDataBlank()){
+            ToastUtils.showToast("请编辑发布内容")
+        }else{
+            val userProfile=getSharedPreferences("userProfile", Context.MODE_PRIVATE)
+            val edit=userProfile.edit()
+            val userId=userProfile.getLong("userId",0)
+            mPresenter.uploadShare(userId,write_text.toString().trim(),write_address.text.toString().trim(),firstImageUrl,secondImageUrl,threeImageUrl)
+        }
+    }
+
+    private fun checkALLDataBlank():Boolean{
+        val dadalist= arrayListOf<String>()
+        dadalist.add(write_text.text.toString())
+        return dadalist.contains("")
+    }
     private fun updateImageToQinu(){
 
         CoCo.with(this)
@@ -168,13 +188,18 @@ when(requestCode){
 
                 override fun onSuccess(data: PickResult) {
 //
-                    pic_one.setImageURI(data.originUri)
-                    var imagePath=data.originUri.toString()
-//                    pic_three.setImageURI(Uri.parse(imagePath))
+                    when(selectImage){
+                        SELECT_IMAGE_ONE ->{
+                            pic_one.setImageURI(data.originUri)
+                                         }
+                        SELECT_IMAGE_TWO ->{
+                            pic_second.setImageURI(data.originUri)
+                                           }
+                        SELECT_IMAGE_THREE -> {
+                            pic_three.setImageURI(data.originUri)
+                        }
+                    }
 
-                    Log.d("图片地址",imagePath)
-                    Log.d("图片地址",data.localPath)
-                    Log.d("图片地址",data.originUri.toString())
                     verfyPerrsion()
                     var key = UUID.randomUUID().toString()
                     uploadManager.put(
@@ -187,10 +212,22 @@ when(requestCode){
                              * @param info     上传完成返回日志信息
                              * @param response 上传完成的回复内容
                              */
-                            PicassoLoader.createLoader(pic_three, ApiConstants.QINIU_URL+key)
-                                .attach()
-                            Log.d("七牛云文件名称",ApiConstants.QINIU_URL+key)
-                            Log.d("七牛云返回结果",info.toString())
+                            Log.d("TTTTTTTT",info.toString())
+                            if (info.statusCode == 200){
+                                when(selectImage){
+                                    SELECT_IMAGE_ONE ->{
+                                       firstImageUrl=key
+                                    }
+                                    SELECT_IMAGE_TWO ->{
+                                        secondImageUrl=key
+                                    }
+                                    SELECT_IMAGE_THREE -> {
+                                        threeImageUrl=key
+                                    }
+                                }
+                            }
+//                            PicassoLoader.createLoader(pic_three, ApiConstants.QINIU_URL+key)
+//                                .attach()
                         },null)
 
 
@@ -290,8 +327,8 @@ when(requestCode){
                 //解析定位结果
                 val result = LocationResultUtils.getLocationStr(loc)
 //                locationTv.text = result
-                Log.d("TTTTTTTTTTT",result)
-                write_address.text=result
+                Log.d("TTTTTTTTTTT",result.toString())
+                setLocationResult(result)
             } else {
                 write_address.text="获取定位信息失败"
             }
@@ -313,7 +350,39 @@ when(requestCode){
         }
     }
 
+    private fun setLocationResult(result:LocationModel?){
+        if (result?.errorCode == 0 ){
+            when(result?.locationType){
+                1 -> {
+                   mPresenter.getAdressDetail(result?.longitude.toString(),result?.latitude.toString())
+                      }
+                5 -> {
+                    ToastUtils.showToast("定位精度不够，可再重试一次")
+                    mPresenter.getAdressDetail(result?.longitude.toString(),result?.latitude.toString())
+                     }
+                else ->{
+                    ToastUtils.showToast("网络定位出了点问题，请稍后再试")
+                }
+            }
+        }
+    }
 
+    override fun setAddressDetail(address: String) {
+       write_address.text=address
+    }
 
+    override fun showUploadShareResult(result: Boolean) {
+        if (result){
+            ToastUtils.showToast("发布成功")
+            val intent= Intent(this@WriteActivity, MainActivity::class.java)
+            startActivity(intent)
+        }else{
+            ToastUtils.showToast("网络出了点问题，请稍后再试")
+        }
+    }
+
+    override fun showToast(message: String) {
+        ToastUtils.showToast(message)
+    }
 }
 
