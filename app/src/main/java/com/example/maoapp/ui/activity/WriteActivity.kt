@@ -10,6 +10,7 @@ import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat.checkSelfPermission
 import androidx.core.app.ActivityCompat.requestPermissions
 import androidx.core.content.ContextCompat
@@ -24,6 +25,7 @@ import com.example.maoapp.contract.WriteContract
 import com.example.maoapp.presenter.WritePresenter
 import com.example.maoapp.utils.LocationResultUtils
 import com.example.maoapp.utils.LocationResultUtils.isLocationProviderEnabled
+import com.example.maoapp.utils.ToastUtils
 import com.qiniu.android.storage.UploadManager
 import com.qw.photo.CoCo
 import com.qw.photo.callback.GetImageCallBack
@@ -67,7 +69,7 @@ class WriteActivity : BaseInjectActivity<WritePresenter>(), WriteContract.View{
 //    @ExperimentalStdlibApi
     override fun initWidget() {
            initMap()
-//        mPresenter.getQiniuToken()
+        mPresenter.getQiniuToken()
 //        verfyStoragePermissions(this)
         initLinserter()
 
@@ -104,31 +106,37 @@ class WriteActivity : BaseInjectActivity<WritePresenter>(), WriteContract.View{
     }
 
 //    @ExperimentalStdlibApi
-//    override fun onRequestPermissionsResult(
-//        requestCode: Int,
-//        permissions: Array<out String>,
-//        grantResults: IntArray
-//    ) {
-//
-//        var isAgree = true
-//        for (i in grantResults.indices){
-//            if (grantResults[i] != PackageManager.PERMISSION_GRANTED){
-//                isAgree = false
-//                val showRequestPermission= shouldShowRequestPermissionRationale(this,permissions[i])
-//                if (showRequestPermission){
-//                    ToastUtils.showToast("你拒绝了读写存储权限")
-//                    Log.d("FFFFFFFFF","拒绝了读写存储权限")
-//                }
-//            }
-//        }
-//        if (isAgree){
-//            Log.d("TTTTTTTT","允许了读写存储权限")
-//            updateImageToQinu()
-//        }
-//
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-//
-//    }
+    @RequiresApi(Build.VERSION_CODES.M)
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+
+when(requestCode){
+    WriteActivity.WRITE_EXTERNAL_STORAGE ->{
+        var isAgree = true
+        for (i in grantResults.indices){
+            if (grantResults[i] != PackageManager.PERMISSION_GRANTED){
+                isAgree = false
+                val showRequestPermission= shouldShowRequestPermissionRationale(permissions[i])
+                if (showRequestPermission){
+                    ToastUtils.showToast("你拒绝了读写存储权限")
+                    Log.d("FFFFFFFFF","拒绝了读写存储权限")
+                }
+            }
+        }
+        if (isAgree){
+            Log.d("TTTTTTTT","允许了读写存储权限")
+            updateImageToQinu()
+        }
+    }
+}
+
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+    }
 
 //    @ExperimentalStdlibApi
     private fun initLinserter(){
@@ -162,20 +170,20 @@ class WriteActivity : BaseInjectActivity<WritePresenter>(), WriteContract.View{
                     Log.d("图片地址",imagePath)
                     Log.d("图片地址",data.localPath)
                     Log.d("图片地址",data.originUri.toString())
-//                    verfyPerrsion()
-//                    uploadManager.put(
-//                        data.localPath,"zfyljxq.jpg",qiniuTokenStr,
-//                        { key, info, response ->
-//                            /**
-//                             * 用户自定义的内容上传完成后处理动作必须实现的方法
-//                             *
-//                             * @param key      文件上传保存名称
-//                             * @param info     上传完成返回日志信息
-//                             * @param response 上传完成的回复内容
-//                             */
-//                            Log.d("七牛云文件名称",key)
-//                            Log.d("七牛云返回结果",info.toString())
-//                        },null)
+                    verfyPerrsion()
+                    uploadManager.put(
+                        data.localPath,"zfyljxq.jpg",qiniuTokenStr,
+                        { key, info, response ->
+                            /**
+                             * 用户自定义的内容上传完成后处理动作必须实现的方法
+                             *
+                             * @param key      文件上传保存名称
+                             * @param info     上传完成返回日志信息
+                             * @param response 上传完成的回复内容
+                             */
+                            Log.d("七牛云文件名称",key)
+                            Log.d("七牛云返回结果",info.toString())
+                        },null)
 
 
                 }
