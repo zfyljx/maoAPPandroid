@@ -22,15 +22,19 @@ import com.amap.api.location.AMapLocationListener
 import com.example.maoapp.R
 import com.example.maoapp.base.BaseInjectActivity
 import com.example.maoapp.contract.WriteContract
+import com.example.maoapp.network.support.ApiConstants
 import com.example.maoapp.presenter.WritePresenter
 import com.example.maoapp.utils.LocationResultUtils
 import com.example.maoapp.utils.LocationResultUtils.isLocationProviderEnabled
 import com.example.maoapp.utils.ToastUtils
+import com.liulishuo.qiniuimageloader.utils.PicassoLoader
 import com.qiniu.android.storage.UploadManager
 import com.qw.photo.CoCo
 import com.qw.photo.callback.GetImageCallBack
 import com.qw.photo.pojo.PickResult
 import kotlinx.android.synthetic.main.activity_write.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class WriteActivity : BaseInjectActivity<WritePresenter>(), WriteContract.View{
 
@@ -166,13 +170,15 @@ when(requestCode){
 //
                     pic_one.setImageURI(data.originUri)
                     var imagePath=data.originUri.toString()
-                    pic_three.setImageURI(Uri.parse(imagePath))
+//                    pic_three.setImageURI(Uri.parse(imagePath))
+
                     Log.d("图片地址",imagePath)
                     Log.d("图片地址",data.localPath)
                     Log.d("图片地址",data.originUri.toString())
                     verfyPerrsion()
+                    var key = UUID.randomUUID().toString()
                     uploadManager.put(
-                        data.localPath,"zfyljxq.jpg",qiniuTokenStr,
+                        data.localPath,key,qiniuTokenStr,
                         { key, info, response ->
                             /**
                              * 用户自定义的内容上传完成后处理动作必须实现的方法
@@ -181,7 +187,9 @@ when(requestCode){
                              * @param info     上传完成返回日志信息
                              * @param response 上传完成的回复内容
                              */
-                            Log.d("七牛云文件名称",key)
+                            PicassoLoader.createLoader(pic_three, ApiConstants.QINIU_URL+key)
+                                .attach()
+                            Log.d("七牛云文件名称",ApiConstants.QINIU_URL+key)
                             Log.d("七牛云返回结果",info.toString())
                         },null)
 

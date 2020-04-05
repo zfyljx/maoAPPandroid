@@ -13,6 +13,7 @@
 
     <string name="home_second">Home Second</string>
     <string name="login">登录</string>
+    <string name="qiniu_url">http://q87u04f0o.bkt.clouddn.com/</string>
     <string name="welcome">欢迎</string>
     <string name="phone">手机号</string>
     <string name="phone_login">手机号</string>
@@ -41,7 +42,7 @@
     <string name="data_not_empty_prompt">请将以上内容填写完整</string>
     <string name="error_two_password_prompt">两次密码输入不一致</string>
     <string name="password_limit">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
-    <string name="sms_model">某时某刻验证短信</string>
+    <string name="sms_model">猫咪分享验证短信</string>
     <string name="code_send_again">重新发送</string>
     <string name="phone_number_is_verified">该手机号已注册</string>
     <string name="phone_number_not_verified">该手机号未注册</string>

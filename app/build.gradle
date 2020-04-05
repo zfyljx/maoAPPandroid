@@ -121,4 +121,9 @@ dependencies {
 
     implementation 'com.amap.api:location:latest.integration'
     implementation 'com.afollestad:assent:2.3.1'
+
+    implementation 'com.liulishuo.qiniuimageloader:library:1.0.4'
+    // 可不引: 基于基本库与picasso做上层封装，可作为案例，也可直接使用
+    implementation 'com.liulishuo.qiniuimageloader:utils-picasso:1.0.4'
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }
