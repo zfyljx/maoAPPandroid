@@ -26,7 +26,9 @@ class WritePresenter@Inject constructor(private val mLoginHelper: LoginHelper) :
     }
 
     override fun getAdressDetail(longitude: String, latitude: String) {
-        val subscriber = mLoginHelper.getAdressDetail(longitude, latitude)
+        //TODO
+        //真机模拟
+        val subscriber = mLoginHelper.getAdressDetail("121.4235220000", "31.2601760000")
             .compose(rxSchedulerHelper())
             .subscribeWith(object : BaseSubscriber<LocationBean>(mView) {
                 override fun onSuccess(mData: LocationBean) {

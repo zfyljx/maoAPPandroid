@@ -75,8 +75,9 @@ class WriteActivity : BaseInjectActivity<WritePresenter>(), WriteContract.View{
 
 
     override fun initWidget() {
-           initMap()
         mPresenter.getQiniuToken()
+           initMap()
+
         initLinserter()
 
 

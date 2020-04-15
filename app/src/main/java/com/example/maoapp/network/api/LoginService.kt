@@ -32,6 +32,7 @@ interface LoginService {
     @GET("/getandroidaddressdetail")
     fun getAddressDetail(@Query("longitude")longitude:String,@Query("latitude")latitude:String):Flowable<LocationBean>
 
+    @FormUrlEncoded
     @POST("/postandroidsaveshare")
     fun saveShare(@Field("id")id:Long,@Field("message")message:String,@Field("address")address:String,@Field("imageOne")imageOne:String,@Field("imageTwo")imageTwo:String,@Field("imageThree")imageThree:String):Flowable<ResultNoDataBean>
 }
