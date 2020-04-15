@@ -34,5 +34,5 @@ interface LoginService {
 
     @FormUrlEncoded
     @POST("/postandroidsaveshare")
-    fun saveShare(@Field("id")id:Long,@Field("message")message:String,@Field("address")address:String,@Field("imageOne")imageOne:String,@Field("imageTwo")imageTwo:String,@Field("imageThree")imageThree:String):Flowable<ResultNoDataBean>
+    fun saveShare(@Field("id")id:Long,@Field("userName")userName: String,@Field("message")message:String,@Field("address")address:String,@Field("imageOne")imageOne:String,@Field("imageTwo")imageTwo:String,@Field("imageThree")imageThree:String):Flowable<ResultNoDataBean>
 }

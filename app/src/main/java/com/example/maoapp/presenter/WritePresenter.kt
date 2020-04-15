@@ -49,13 +49,14 @@ class WritePresenter@Inject constructor(private val mLoginHelper: LoginHelper) :
 
     override fun uploadShare(
         id: Long,
+        userName:String
         message: String,
         address: String,
         imageOne: String,
         imageTwo: String,
         imageThree: String
     ) {
-        val subscriber = mLoginHelper.upLoadShare(id, message, address, imageOne, imageTwo, imageThree)
+        val subscriber = mLoginHelper.upLoadShare(id,userName, message, address, imageOne, imageTwo, imageThree)
             .compose(rxSchedulerHelper())
             .subscribeWith(object : BaseSubscriber<ResultNoDataBean>(mView) {
                 override fun onSuccess(mData: ResultNoDataBean) {

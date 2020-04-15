@@ -20,5 +20,5 @@ class LoginHelper(private val mLoginService: LoginService) {
 
     fun getAdressDetail(longitude:String,latitude:String):Flowable<LocationBean> = mLoginService.getAddressDetail(longitude, latitude)
 
-    fun upLoadShare(id:Long,message:String,address:String,imageOne:String,imageTwo:String,imageThree:String):Flowable<ResultNoDataBean> = mLoginService.saveShare(id, message, address, imageOne, imageTwo, imageThree)
+    fun upLoadShare(id:Long,userName: String,message:String,address:String,imageOne:String,imageTwo:String,imageThree:String):Flowable<ResultNoDataBean> = mLoginService.saveShare(id,userName, message, address, imageOne, imageTwo, imageThree)
 }

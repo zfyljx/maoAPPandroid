@@ -21,7 +21,7 @@ interface WriteContract {
 
         fun getAdressDetail(longitude:String,latitude:String)
 
-        fun uploadShare(id:Long,message:String,address:String,imageOne:String,imageTwo:String,imageThree:String)
+        fun uploadShare(id:Long,userName:String,message:String,address:String,imageOne:String,imageTwo:String,imageThree:String)
 
     }
 }

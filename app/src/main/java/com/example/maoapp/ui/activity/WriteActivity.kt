@@ -171,6 +171,7 @@ when(requestCode){
             val userProfile=getSharedPreferences("userProfile", Context.MODE_PRIVATE)
             val edit=userProfile.edit()
             val userId=userProfile.getLong("userId",0)
+            val userName=userProfile.getString("userName","窝里横")
             mPresenter.uploadShare(userId,write_text.text.toString().trim(),write_address.text.toString().trim(),firstImageUrl,secondImageUrl,threeImageUrl)
         }
     }
