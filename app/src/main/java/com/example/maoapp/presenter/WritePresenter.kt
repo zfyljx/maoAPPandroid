@@ -49,7 +49,7 @@ class WritePresenter@Inject constructor(private val mLoginHelper: LoginHelper) :
 
     override fun uploadShare(
         id: Long,
-        userName:String
+        userName:String,
         message: String,
         address: String,
         imageOne: String,
