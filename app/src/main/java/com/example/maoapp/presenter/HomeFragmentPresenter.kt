@@ -18,7 +18,7 @@ class HomeFragmentPresenter@Inject constructor(private val mLoginHelper: LoginHe
                     if (mData.status == 200){
                         mView?.setShares(mData.data)
                     }else{
-                        mView?.showToast("网络出错")
+                        mView?.showToast("没有新分享")
                     }
                 }
 

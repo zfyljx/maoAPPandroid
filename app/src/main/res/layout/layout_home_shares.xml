@@ -11,7 +11,7 @@
     app:cardCornerRadius="@dimen/dp4"
     app:cardElevation="@dimen/dp2">
 
-    <ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/dp4">
@@ -120,5 +120,5 @@
 
         </LinearLayout>
 
-    </ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

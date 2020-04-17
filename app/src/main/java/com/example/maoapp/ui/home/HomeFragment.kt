@@ -1,5 +1,6 @@
 package com.example.maoapp.ui.home
 
+import android.util.Log
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.maoapp.R
@@ -58,7 +59,7 @@ class HomeFragment : BaseRefreshFragment<HomeFragmentPresenter, ShareModelList.S
              * suggestions if available, true if the action was handled by the listener.
              */
             override fun onQueryTextChange(newText: String?): Boolean {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                return true
             }
 
         })
@@ -66,6 +67,7 @@ class HomeFragment : BaseRefreshFragment<HomeFragmentPresenter, ShareModelList.S
 
     override fun setShares(shares: ShareModelList) {
        mSharesList.addAll(shares.shares)
+        Log.d("TTTTTTTTTTTT",mSharesList.toString())
         finishTask()
     }
 

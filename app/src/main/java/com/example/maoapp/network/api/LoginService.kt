@@ -37,8 +37,8 @@ interface LoginService {
     fun getShares():Flowable<SharesBean>
 
     @GET("getandroidqueryshares")
-    fun queryShares(@Field("query")query:String):Flowable<SharesBean>
+    fun queryShares(@Query("query")query:String):Flowable<SharesBean>
 
     @GET("getandroidmineshares")
-    fun getMineShares(@Field("userId")userId:Long):Flowable<SharesBean>
+    fun getMineShares(@Query("userId")userId:Long):Flowable<SharesBean>
 }
