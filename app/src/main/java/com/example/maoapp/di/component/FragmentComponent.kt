@@ -3,6 +3,7 @@ package com.example.maoapp.di.component
 import android.app.Activity
 import com.example.maoapp.di.module.FragmentModule
 import com.example.maoapp.di.scope.FragmentScope
+import com.example.maoapp.ui.gallery.GalleryFragment
 import com.example.maoapp.ui.home.HomeFragment
 import dagger.Component
 
@@ -12,4 +13,5 @@ interface FragmentComponent {
     val activity: Activity
 
     fun inject(homeFragment: HomeFragment)
+    fun inject(mineFragment: GalleryFragment)
 }

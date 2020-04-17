@@ -1,0 +1,50 @@
+package com.example.maoapp.presenter
+
+import com.example.maoapp.base.BaseSubscriber
+import com.example.maoapp.base.RxPresenter
+import com.example.maoapp.contract.HomeFragmentContract
+import com.example.maoapp.model.apiBean.SharesBean
+import com.example.maoapp.network.helper.LoginHelper
+import com.example.maoapp.utils.rxSchedulerHelper
+import javax.inject.Inject
+
+class HomeFragmentPresenter@Inject constructor(private val mLoginHelper: LoginHelper) :
+    RxPresenter<HomeFragmentContract.View>(), HomeFragmentContract.Presenter<HomeFragmentContract.View> {
+    override fun getShares() {
+        val subscriber =mLoginHelper.getShares()
+            .compose(rxSchedulerHelper())
+            .subscribeWith(object : BaseSubscriber<SharesBean>(mView) {
+                override fun onSuccess(mData: SharesBean) {
+                    if (mData.status == 200){
+                        mView?.setShares(mData.data)
+                    }else{
+                        mView?.showToast("网络出错")
+                    }
+                }
+
+                override fun onError(e: Throwable) {
+                    mView?.showToast("网络出错,请刷新")
+                }
+            })
+        addSubscribe(subscriber)
+    }
+
+    override fun queryShares(query: String) {
+        val subscriber =mLoginHelper.queryShares(query)
+            .compose(rxSchedulerHelper())
+            .subscribeWith(object : BaseSubscriber<SharesBean>(mView) {
+                override fun onSuccess(mData: SharesBean) {
+                    if (mData.status == 200){
+                        mView?.setShares(mData.data)
+                    }else{
+                        mView?.showToast("网络出错")
+                    }
+                }
+
+                override fun onError(e: Throwable) {
+                    mView?.showToast("网络出错,请刷新")
+                }
+            })
+        addSubscribe(subscriber)
+    }
+}

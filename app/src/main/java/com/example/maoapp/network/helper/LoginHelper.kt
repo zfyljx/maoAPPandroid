@@ -1,9 +1,6 @@
 package com.example.maoapp.network.helper
 
-import com.example.maoapp.model.apiBean.LocationBean
-import com.example.maoapp.model.apiBean.QiniuToken
-import com.example.maoapp.model.apiBean.ResultNoDataBean
-import com.example.maoapp.model.apiBean.UserApiBean
+import com.example.maoapp.model.apiBean.*
 import com.example.maoapp.network.api.LoginService
 import io.reactivex.Flowable
 
@@ -21,4 +18,10 @@ class LoginHelper(private val mLoginService: LoginService) {
     fun getAdressDetail(longitude:String,latitude:String):Flowable<LocationBean> = mLoginService.getAddressDetail(longitude, latitude)
 
     fun upLoadShare(id:Long,userName: String,message:String,address:String,imageOne:String,imageTwo:String,imageThree:String):Flowable<ResultNoDataBean> = mLoginService.saveShare(id,userName, message, address, imageOne, imageTwo, imageThree)
+
+    fun getShares():Flowable<SharesBean> =mLoginService.getShares()
+
+    fun queryShares(query:String):Flowable<SharesBean> = mLoginService.queryShares(query)
+
+    fun getMineShares(userId:Long):Flowable<SharesBean> = mLoginService.getMineShares(userId)
 }

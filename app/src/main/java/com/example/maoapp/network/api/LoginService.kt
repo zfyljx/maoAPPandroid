@@ -1,9 +1,6 @@
 package com.example.maoapp.network.api
 
-import com.example.maoapp.model.apiBean.LocationBean
-import com.example.maoapp.model.apiBean.QiniuToken
-import com.example.maoapp.model.apiBean.ResultNoDataBean
-import com.example.maoapp.model.apiBean.UserApiBean
+import com.example.maoapp.model.apiBean.*
 import io.reactivex.Flowable
 import retrofit2.http.*
 
@@ -35,4 +32,13 @@ interface LoginService {
     @FormUrlEncoded
     @POST("/postandroidsaveshare")
     fun saveShare(@Field("id")id:Long,@Field("userName")userName: String,@Field("message")message:String,@Field("address")address:String,@Field("imageOne")imageOne:String,@Field("imageTwo")imageTwo:String,@Field("imageThree")imageThree:String):Flowable<ResultNoDataBean>
+
+    @GET("/getandroidshares")
+    fun getShares():Flowable<SharesBean>
+
+    @GET("getandroidqueryshares")
+    fun queryShares(@Field("query")query:String):Flowable<SharesBean>
+
+    @GET("getandroidmineshares")
+    fun getMineShares(@Field("userId")userId:Long):Flowable<SharesBean>
 }

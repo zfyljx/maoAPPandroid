@@ -34,7 +34,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_marginLeft="100dp"
             android:textColor="@color/colorTranslucent"
             android:textSize="15dp"
             app:layout_constraintRight_toRightOf="parent"
