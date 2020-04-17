@@ -22,7 +22,7 @@ class HomeAdapter(data: List<ShareModelList.ShareModel>) : BaseQuickAdapter<Shar
         with(helper) {
             item.let {
                 setText(R.id.share_user_name, item.userName)
-                setText(R.id.share_create_time, item.createTime.toString())
+                setText(R.id.share_create_time, item.createTime)
                 setText(R.id.share_message, item.message)
                 setText(R.id.share_address, item.address)
 

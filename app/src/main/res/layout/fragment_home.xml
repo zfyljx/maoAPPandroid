@@ -11,7 +11,7 @@
         android:id="@+id/home_share_query"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:queryHint="@android:string/ime_action_search"
+        app:queryHint="@string/home_search"
         tools:ignore="MissingConstraints">
 
     </androidx.appcompat.widget.SearchView>
