@@ -10,6 +10,7 @@ import com.example.maoapp.contract.HomeFragmentContract
 import com.example.maoapp.model.bean.ShareModelList
 import com.example.maoapp.presenter.HomeFragmentPresenter
 import com.example.maoapp.utils.ToastUtils
+import kotlinx.android.synthetic.main.common_refresh_recycler.*
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : BaseRefreshFragment<HomeFragmentPresenter, ShareModelList.ShareModel>(), HomeFragmentContract.View {
@@ -47,6 +48,7 @@ class HomeFragment : BaseRefreshFragment<HomeFragmentPresenter, ShareModelList.S
              */
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let { mPresenter.queryShares(it) }
+
                 return false
             }
 
@@ -65,8 +67,9 @@ class HomeFragment : BaseRefreshFragment<HomeFragmentPresenter, ShareModelList.S
         })
     }
 
-    override fun setShares(shares: ShareModelList) {
-       mSharesList.addAll(shares.shares)
+    override fun setShares(shares: List<ShareModelList.ShareModel>) {
+        mSharesList.clear()
+       mSharesList.addAll(shares)
         Log.d("GGGGGGGGGGGGGG",mSharesList.toString())
         finishTask()
     }
@@ -85,10 +88,18 @@ class HomeFragment : BaseRefreshFragment<HomeFragmentPresenter, ShareModelList.S
         }
     }
 
+    override fun initSetListener() {
+        refresh.setOnRefreshListener {
+            lazyLoadData()
+            refresh.isRefreshing=false
+        }
+    }
+
     override fun initRecyclerView() {
         mAdapter = HomeAdapter(mSharesList)
-        mRecycler?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        mRecycler?.adapter = mAdapter
+        recycler?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+//        mRecycler?.layoutManager=
+        recycler?.adapter = mAdapter
     }
 //    private lateinit var homeViewModel: HomeViewModel
 //

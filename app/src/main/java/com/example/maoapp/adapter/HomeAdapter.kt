@@ -27,27 +27,35 @@ class HomeAdapter(data: List<ShareModelList.ShareModel>) : BaseQuickAdapter<Shar
                 setText(R.id.share_address, item.address)
 
                 if (!item.imageOne.isNullOrBlank()) {
-                    getView<LinearLayout>(R.id.share_linear).visibility= View.INVISIBLE
                     val imageOne: ImageView = getView(R.id.share_pic_one)
-                    imageOne.visibility=View.INVISIBLE
+                    imageOne.visibility=View.VISIBLE
                     PicassoLoader.createLoader(imageOne, ApiConstants.QINIU_URL + item.imageOne)
                         .attach()
+
+                    if (!item.imageTwo.isNullOrBlank()) {
+                        val imageTwo: ImageView = getView(R.id.share_pic_second)
+                        imageTwo.visibility=View.VISIBLE
+                        PicassoLoader.createLoader(imageTwo, ApiConstants.QINIU_URL + item.imageTwo)
+                            .attach()
+                    }
+
+                    if (!item.imageThree.isNullOrBlank()) {
+                        val imageThree: ImageView = getView(R.id.share_pic_three)
+                        imageThree.visibility=View.VISIBLE
+                        PicassoLoader.createLoader(imageThree, ApiConstants.QINIU_URL + item.imageTwo)
+                            .attach()
+                    }
+                }else
+                {
+                    getView<LinearLayout>(R.id.share_linear).visibility=View.GONE
                 }
 
-                if (!item.imageTwo.isNullOrBlank()) {
-                    val imageTwo: ImageView = getView(R.id.share_pic_second)
-                    imageTwo.visibility=View.INVISIBLE
-                    PicassoLoader.createLoader(imageTwo, ApiConstants.QINIU_URL + item.imageTwo)
-                        .attach()
-                }
 
-                if (!item.imageThree.isNullOrBlank()) {
-                    val imageThree: ImageView = getView(R.id.share_pic_three)
-                    imageThree.visibility=View.INVISIBLE
-                    PicassoLoader.createLoader(imageThree, ApiConstants.QINIU_URL + item.imageTwo)
-                        .attach()
-                }
             }
         }
+    }
+
+    override fun getItemCount(): Int {
+        return data.size
     }
 }

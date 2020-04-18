@@ -1,6 +1,7 @@
 package com.example.maoapp.ui.gallery
 
 import android.content.Context
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.maoapp.R
 import com.example.maoapp.adapter.HomeAdapter
 import com.example.maoapp.base.BaseRefreshFragment
@@ -8,6 +9,7 @@ import com.example.maoapp.contract.MineShareContract
 import com.example.maoapp.model.bean.ShareModelList
 import com.example.maoapp.presenter.MineSharesPresenter
 import com.example.maoapp.utils.ToastUtils
+import kotlinx.android.synthetic.main.common_refresh_recycler.*
 
 class GalleryFragment :  BaseRefreshFragment<MineSharesPresenter, ShareModelList.ShareModel>(), MineShareContract.View  {
     /**
@@ -23,8 +25,8 @@ class GalleryFragment :  BaseRefreshFragment<MineSharesPresenter, ShareModelList
     override fun initInject() = fragmentComponent.inject(this)
 
 //    override fun lazyLoadData() = mPresenter.getShares()
-    override fun setShares(shares: ShareModelList) {
-    mSharesList.addAll(shares.shares)
+    override fun setShares(shares: List<ShareModelList.ShareModel>) {
+    mSharesList.addAll(shares)
     finishTask()
     }
 
@@ -32,7 +34,19 @@ class GalleryFragment :  BaseRefreshFragment<MineSharesPresenter, ShareModelList
         ToastUtils.showToast(tag)
     }
 
+    override fun initSetListener() {
+        refresh.setOnRefreshListener {
+            lazyLoadData()
+            refresh.isRefreshing=false
+        }
+    }
+
     override fun initDatas() {
+        mAdapter = HomeAdapter(mSharesList)
+        recycler?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+//        mRecycler?.layoutManager=
+        recycler?.adapter = mAdapter
+
         val userProfile= activity?.getSharedPreferences("userProfile", Context.MODE_PRIVATE)
         val edit=userProfile?.edit()
         val userId=userProfile?.getLong("userId",0) as Long

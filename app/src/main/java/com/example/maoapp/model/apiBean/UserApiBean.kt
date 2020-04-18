@@ -17,4 +17,4 @@ data class LocationBean(val status: Int,val message: String,val data:AddressDeta
 
 data class ResultNoDataBean(val status: Int,val message: String)
 
-data class SharesBean(val status: Int,val message: String,val data:ShareModelList)
+data class SharesBean(val status: Int,val message: String,val data:List<ShareModelList.ShareModel>)
