@@ -59,9 +59,11 @@ abstract class BaseFragment : RxFragment() {
         super.onViewCreated(view, savedInstanceState)
         initInject()
         initPresenter()
-        lazyLoadData()
         initRecyclerView()
         initDatas()
+        lazyLoadData()
+
+
         initVariables()
         initWidget()
         initSetListener()

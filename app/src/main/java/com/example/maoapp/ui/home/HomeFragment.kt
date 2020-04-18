@@ -67,7 +67,7 @@ class HomeFragment : BaseRefreshFragment<HomeFragmentPresenter, ShareModelList.S
 
     override fun setShares(shares: ShareModelList) {
        mSharesList.addAll(shares.shares)
-        Log.d("TTTTTTTTTTTT",mSharesList.toString())
+        Log.d("GGGGGGGGGGGGGG",mSharesList.toString())
         finishTask()
     }
 
