@@ -1,12 +1,183 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.activity.CommodityActivity">
 
 
+    <com.geek.banner.Banner
+        android:id="@+id/banner_sell"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="20dp"
+        app:banner_auto_play="true"
+        app:banner_default_image="@drawable/banner_default"
+        app:banner_expose_width="20dp"
+        app:banner_interval_time="5000"
+        app:banner_mz_anim="ScaleIn"
+        app:banner_mz_overlap="@dimen/dp14"
+        app:banner_scroll_time="1000"
+        app:banner_show_indicator="true"
+        app:banner_show_model="MZ_EFFECT"
+        tools:ignore="MissingConstraints" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/dp14">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="猫粮名称"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:paddingBottom="@dimen/dp10"
+            android:paddingTop="@dimen/dp14"
+            android:textColor="@color/colorDark"
+            android:textSize="@dimen/dp20">
+
+        </TextView>
 
 
-</android.support.constraint.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="15dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/dp20"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textColor="@color/colorDark"
+                android:layout_marginLeft="141dp"
+                android:text="售价">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/commodity_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/dp20"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textColor="@color/colorDark"
+                android:layout_marginLeft="14dp"
+                android:text="17">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/dp20"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textColor="@color/colorDark"
+                android:layout_marginLeft="14dp"
+                android:text="元">
+
+            </TextView>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="15dp"
+            android:paddingLeft="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginLeft="110dp"
+                android:text="店铺"
+                android:textColor="@color/colorDark"
+                android:textSize="@dimen/dp20">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/commodity_store_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/dp20"
+                android:gravity="center"
+                android:textColor="@color/colorDark"
+                android:layout_marginLeft="14dp"
+                android:text="店铺名称">
+
+            </TextView>
+
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="15dp"
+            android:paddingBottom="@dimen/dp20"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/dp20"
+                android:gravity="center"
+                android:textColor="@color/colorDark"
+                android:layout_marginLeft="95dp"
+                android:text="联系方式">
+
+
+
+            </TextView>
+            <TextView
+                android:id="@+id/commodity_store_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/dp20"
+                android:gravity="center"
+                android:textColor="@color/colorDark"
+                android:layout_marginLeft="14dp"
+                android:text="13262576795"> </TextView>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/commodity_description"
+            android:layout_width="wrap_content"
+            android:paddingTop="@dimen/dp15"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dp20"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textColor="@color/colorDark"
+            android:text="简介"
+            >
+
+        </TextView>
+
+    </LinearLayout>
+    <Button
+        android:id="@+id/commodity_order_submit"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginBottom="20dp"
+        android:text="购买"
+        android:textSize="19sp"
+        android:textColor="@color/colorWhite"
+        android:background="@drawable/button_selector"/>
+
+</LinearLayout>

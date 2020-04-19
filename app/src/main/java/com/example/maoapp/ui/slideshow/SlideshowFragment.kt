@@ -2,13 +2,13 @@ package com.example.maoapp.ui.slideshow
 
 import android.content.Intent
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.maoapp.MainActivity
 import com.example.maoapp.R
 import com.example.maoapp.adapter.SellAdapter
 import com.example.maoapp.base.BaseRefreshFragment
 import com.example.maoapp.contract.SellFragmentContract
 import com.example.maoapp.model.bean.SellModel
 import com.example.maoapp.presenter.SellFragmentPresenter
+import com.example.maoapp.ui.activity.CommodityActivity
 import com.example.maoapp.utils.ToastUtils
 import kotlinx.android.synthetic.main.common_refresh_recycler.*
 
@@ -57,7 +57,7 @@ class SlideshowFragment : BaseRefreshFragment<SellFragmentPresenter, SellModel>(
 
             val sellId= mSellList[position].id
             //TODO
-            val intent =Intent(activity,MainActivity::class.java)
+            val intent =Intent(activity, CommodityActivity::class.java)
             intent.putExtra("sellId",sellId)
             startActivity(intent)
         }

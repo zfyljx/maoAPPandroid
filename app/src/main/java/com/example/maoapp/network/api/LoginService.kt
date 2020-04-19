@@ -36,18 +36,22 @@ interface LoginService {
     @GET("/getandroidshares")
     fun getShares():Flowable<SharesBean>
 
-    @GET("getandroidqueryshares")
+    @GET("/getandroidqueryshares")
     fun queryShares(@Query("query")query:String):Flowable<SharesBean>
 
-    @GET("getandroidmineshares")
+    @GET("/getandroidmineshares")
     fun getMineShares(@Query("userId")userId:Long):Flowable<SharesBean>
 
-    @GET("getandroidallsells")
+    @GET("/getandroidallsells")
     fun getSells():Flowable<SellsBean>
 
-    @GET("getandroidsell")
+    @GET("/getandroidsell")
     fun getSellById(@Query("id")id:Long):Flowable<SellBean>
 
-    @GET("getandroidsellsbyuserid")
+    @GET("/getandroidsellsbyuserid")
     fun getSellsByUserId(@Query("userId")userId:Long):Flowable<SellsBean>
+
+    @FormUrlEncoded
+    @POST("/postandroidbuildorder")
+    fun buildOrder(@Field("storeId")storeId:Long,@Field("storeName")storeName:Long,@Field("name")name:String,@Field("userId")userId:Long,@Field("userName")userName:String,@Field("userPhone")userPhone:String,@Field("userAddress")userAddress:String,@Field("imagePath")imagePath:String,@Field("price")price:Float,@Field("number")number:Int,@Field("totalPrice")totalPrice:Float):Flowable<ResultNoDataBean>
 }
