@@ -4,10 +4,7 @@ import android.app.Activity
 import com.example.maoapp.MainActivity
 import com.example.maoapp.di.module.ActivityModule
 import com.example.maoapp.di.scope.ActivityScope
-import com.example.maoapp.ui.activity.LoginActivity
-import com.example.maoapp.ui.activity.RegisterActivity
-import com.example.maoapp.ui.activity.ResetPasswordActivity
-import com.example.maoapp.ui.activity.WriteActivity
+import com.example.maoapp.ui.activity.*
 import dagger.Component
 
 @ActivityScope
@@ -20,4 +17,5 @@ interface ActivityComponent {
     fun inject(activity: RegisterActivity)
     fun inject(activity: ResetPasswordActivity)
     fun inject(activity:WriteActivity)
+    fun inject(activity:CommodityActivity)
 }

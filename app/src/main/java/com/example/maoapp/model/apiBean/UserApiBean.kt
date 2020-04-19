@@ -1,5 +1,6 @@
 package com.example.maoapp.model.apiBean
 
+import com.example.maoapp.model.bean.SellModel
 import com.example.maoapp.model.bean.ShareModelList
 
 data class UserApiBean(val status:Int,val message:String,val data: User){
@@ -18,3 +19,7 @@ data class LocationBean(val status: Int,val message: String,val data:AddressDeta
 data class ResultNoDataBean(val status: Int,val message: String)
 
 data class SharesBean(val status: Int,val message: String,val data:List<ShareModelList.ShareModel>)
+
+data class SellsBean(val status: Int,val message: String,val data:List<SellModel>)
+
+data class SellBean(val status: Int,val message: String,val data:SellModel)

@@ -142,7 +142,8 @@ task ktlint(type: JavaExec, group: "verification") {
     description = "Check Kotlin code style."
     classpath = configurations.ktlint
     main = "com.github.shyiko.ktlint.Main"
-    args "-a", "src/**/*.kt" // -a 表示代码规范使用 Android Kotlin Style Guide，不需要可以去掉，即改为 args "src/**/*.kt"
+    args "-a", "src/**/*.kt"
+    // -a 表示代码规范使用 Android Kotlin Style Guide，不需要可以去掉，即改为 args "src/**/*.kt"
     // to generate report in checkstyle format prepend following args:
     // "--reporter=plain", "--reporter=checkstyle,output=${buildDir}/ktlint.xml"
     // see https://github.com/shyiko/ktlint#usage for more

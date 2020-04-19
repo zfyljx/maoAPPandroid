@@ -41,4 +41,13 @@ interface LoginService {
 
     @GET("getandroidmineshares")
     fun getMineShares(@Query("userId")userId:Long):Flowable<SharesBean>
+
+    @GET("getandroidallsells")
+    fun getSells():Flowable<SellsBean>
+
+    @GET("getandroidsell")
+    fun getSellById(@Query("id")id:Long):Flowable<SellBean>
+
+    @GET("getandroidsellsbyuserid")
+    fun getSellsByUserId(@Query("userId")userId:Long):Flowable<SellsBean>
 }

@@ -24,4 +24,11 @@ class LoginHelper(private val mLoginService: LoginService) {
     fun queryShares(query:String):Flowable<SharesBean> = mLoginService.queryShares(query)
 
     fun getMineShares(userId:Long):Flowable<SharesBean> = mLoginService.getMineShares(userId)
+
+
+    fun getSells():Flowable<SellsBean> = mLoginService.getSells()
+
+    fun getSellById(id: Long):Flowable<SellBean> = mLoginService.getSellById(id)
+
+    fun getSellsByUserId(userId: Long):Flowable<SellsBean> = mLoginService.getSellsByUserId(userId)
 }

@@ -1,31 +1,92 @@
 package com.example.maoapp.ui.slideshow
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import android.content.Intent
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.maoapp.MainActivity
 import com.example.maoapp.R
+import com.example.maoapp.adapter.SellAdapter
+import com.example.maoapp.base.BaseRefreshFragment
+import com.example.maoapp.contract.SellFragmentContract
+import com.example.maoapp.model.bean.SellModel
+import com.example.maoapp.presenter.SellFragmentPresenter
+import com.example.maoapp.utils.ToastUtils
+import kotlinx.android.synthetic.main.common_refresh_recycler.*
 
-class SlideshowFragment : Fragment() {
+class SlideshowFragment : BaseRefreshFragment<SellFragmentPresenter, SellModel>(), SellFragmentContract.View {
 
-    private lateinit var slideshowViewModel: SlideshowViewModel
+    private var mSellList=ArrayList<SellModel>()
+    private var mAdapter:SellAdapter?=null
+    /**
+     * 布局
+     * @return int
+     */
+    override fun getLayoutId(): Int = R.layout.fragment_slideshow
+    override fun initPresenter() = mPresenter.attachView(this)
 
-    override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
-        slideshowViewModel =
-                ViewModelProviders.of(this).get(SlideshowViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_slideshow, container, false)
-        val textView: TextView = root.findViewById(R.id.text_slideshow)
-        slideshowViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-        return root
+    override fun initInject() = fragmentComponent.inject(this)
+
+    override fun lazyLoadData() = mPresenter.getSells()
+
+    override fun setSells(sells: List<SellModel>) {
+        mSellList.clear()
+        mSellList.addAll(sells)
+        finishTask()
+    }
+
+    override fun showToast(tag: String) {
+        ToastUtils.showToast(tag)
+    }
+
+    companion object {
+        fun newInstance(id: Int): SlideshowFragment {
+            val fragment = SlideshowFragment()
+//            val bundle = Bundle()
+//            bundle.putInt(Constants.EXTRA_POSITION, id)
+//            fragment.arguments = bundle
+            return fragment
+        }
+    }
+
+    override fun initSetListener() {
+        refresh.setOnRefreshListener {
+            lazyLoadData()
+            refresh.isRefreshing=false
+        }
+
+        mAdapter?.setOnItemChildClickListener { adapter, view, position ->
+
+            val sellId= mSellList[position].id
+            //TODO
+            val intent =Intent(activity,MainActivity::class.java)
+            intent.putExtra("sellId",sellId)
+            startActivity(intent)
+        }
+    }
+
+    override fun initRecyclerView() {
+        mAdapter = SellAdapter(mSellList)
+        recycler?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+//        mRecycler?.layoutManager=
+        recycler?.adapter = mAdapter
+    }
+//    private lateinit var slideshowViewModel: SlideshowViewModel
+//
+//    override fun onCreateView(
+//            inflater: LayoutInflater,
+//            container: ViewGroup?,
+//            savedInstanceState: Bundle?
+//    ): View? {
+//        slideshowViewModel =
+//                ViewModelProviders.of(this).get(SlideshowViewModel::class.java)
+//        val root = inflater.inflate(R.layout.fragment_slideshow, container, false)
+//        val textView: TextView = root.findViewById(R.id.text_slideshow)
+//        slideshowViewModel.text.observe(viewLifecycleOwner, Observer {
+//            textView.text = it
+//        })
+//        return root
+//    }
+
+    override fun finishTask() {
+        mAdapter?.notifyDataSetChanged()
     }
 }
