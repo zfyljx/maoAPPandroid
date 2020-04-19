@@ -53,5 +53,5 @@ interface LoginService {
 
     @FormUrlEncoded
     @POST("/postandroidbuildorder")
-    fun buildOrder(@Field("storeId")storeId:Long,@Field("storeName")storeName:Long,@Field("name")name:String,@Field("userId")userId:Long,@Field("userName")userName:String,@Field("userPhone")userPhone:String,@Field("userAddress")userAddress:String,@Field("imagePath")imagePath:String,@Field("price")price:Float,@Field("number")number:Int,@Field("totalPrice")totalPrice:Float):Flowable<ResultNoDataBean>
+    fun buildOrder(@Field("goodId")goodId:Long,@Field("storeId")storeId:Long,@Field("storeName")storeName:String,@Field("name")name:String,@Field("userId")userId:Long,@Field("userName")userName:String,@Field("userPhone")userPhone:String,@Field("userAddress")userAddress:String,@Field("imagePath")imagePath:String,@Field("price")price:Float,@Field("number")number:Int,@Field("totalPrice")totalPrice:Float):Flowable<ResultNoDataBean>
 }

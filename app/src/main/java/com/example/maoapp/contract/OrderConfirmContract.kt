@@ -18,7 +18,7 @@ interface OrderConfirmContract {
 
         fun getSellById(id:Long)
 
-        fun buildOrder(storeId:Long,storeName:Long,name:String,userId:Long,userName:String,userPhone:String,userAddress:String,imagePath:String,price:Float,number:Int,totalPrice:Float)
+        fun buildOrder(goodId:Long,storeId:Long,storeName:String,name:String,userId:Long,userName:String,userPhone:String,userAddress:String,imagePath:String,price:Float,number:Int,totalPrice:Float)
 
     }
 }

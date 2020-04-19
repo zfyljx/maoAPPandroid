@@ -28,8 +28,9 @@ class OrderConfirmPresenter@Inject constructor(private val mLoginHelper: LoginHe
     }
 
     override fun buildOrder(
+        goodId:Long,
         storeId: Long,
-        storeName: Long,
+        storeName: String,
         name: String,
         userId: Long,
         userName: String,
@@ -40,7 +41,7 @@ class OrderConfirmPresenter@Inject constructor(private val mLoginHelper: LoginHe
         number: Int,
         totalPrice: Float
     ) {
-        val subscriber = mLoginHelper.buildOrder(storeId, storeName, name, userId, userName, userPhone, userAddress, imagePath, price, number, totalPrice)
+        val subscriber = mLoginHelper.buildOrder(goodId,storeId, storeName, name, userId, userName, userPhone, userAddress, imagePath, price, number, totalPrice)
             .compose(rxSchedulerHelper())
             .subscribeWith(object : BaseSubscriber<ResultNoDataBean>(mView) {
                 override fun onSuccess(mData: ResultNoDataBean) {
