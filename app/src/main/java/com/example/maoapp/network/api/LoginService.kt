@@ -31,7 +31,7 @@ interface LoginService {
 
     @FormUrlEncoded
     @POST("/postandroidsaveshare")
-    fun saveShare(@Field("id")id:Long,@Field("userName")userName: String,@Field("message")message:String,@Field("address")address:String,@Field("imageOne")imageOne:String,@Field("imageTwo")imageTwo:String,@Field("imageThree")imageThree:String):Flowable<ResultNoDataBean>
+    fun saveShare(@Field("userId")id:Long,@Field("userName")userName: String,@Field("message")message:String,@Field("address")address:String,@Field("imageOne")imageOne:String,@Field("imageTwo")imageTwo:String,@Field("imageThree")imageThree:String):Flowable<ResultNoDataBean>
 
     @GET("/getandroidshares")
     fun getShares():Flowable<SharesBean>
@@ -46,7 +46,7 @@ interface LoginService {
     fun getSells():Flowable<SellsBean>
 
     @GET("/getandroidsell")
-    fun getSellById(@Query("id")id:Long):Flowable<SellBean>
+    fun getSellById(@Query("sellId")id:Long):Flowable<SellBean>
 
     @GET("/getandroidsellsbyuserid")
     fun getSellsByUserId(@Query("userId")userId:Long):Flowable<SellsBean>
