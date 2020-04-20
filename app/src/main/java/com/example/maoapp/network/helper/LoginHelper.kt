@@ -33,4 +33,10 @@ class LoginHelper(private val mLoginService: LoginService) {
     fun getSellsByUserId(userId: Long):Flowable<SellsBean> = mLoginService.getSellsByUserId(userId)
 
     fun buildOrder(goodId:Long,storeId:Long,storeName:String,name:String,userId:Long,userName:String,userPhone:String,userAddress:String,imagePath:String,price:Float,number:Int,totalPrice:Float):Flowable<ResultNoDataBean> =mLoginService.buildOrder(goodId,storeId, storeName, name, userId, userName, userPhone, userAddress, imagePath, price, number, totalPrice)
+
+    fun getMyOrders(userId: Long):Flowable<OrdersBean> = mLoginService.getOrdersByUserId(userId)
+
+    fun getOrder(orderId:Long):Flowable<OrderBean> = mLoginService.getOrderByOrderId(orderId)
+
+    fun updateOrder(orderId: Long):Flowable<ResultNoDataBean> = mLoginService.updateOrderStatus(orderId)
 }

@@ -1,5 +1,6 @@
 package com.example.maoapp.model.apiBean
 
+import com.example.maoapp.model.bean.OrderModel
 import com.example.maoapp.model.bean.SellModel
 import com.example.maoapp.model.bean.ShareModelList
 
@@ -23,3 +24,7 @@ data class SharesBean(val status: Int,val message: String,val data:List<ShareMod
 data class SellsBean(val status: Int,val message: String,val data:List<SellModel>)
 
 data class SellBean(val status: Int,val message: String,val data:SellModel)
+
+data class OrdersBean(val status: Int,val message: String,val data:List<OrderModel>)
+
+data class OrderBean(val status: Int,val message: String,val data:OrderModel)

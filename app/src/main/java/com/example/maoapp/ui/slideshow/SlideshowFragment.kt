@@ -16,6 +16,7 @@ class SlideshowFragment : BaseRefreshFragment<SellFragmentPresenter, SellModel>(
 
     private var mSellList=ArrayList<SellModel>()
     private var mAdapter:SellAdapter?=null
+
     /**
      * 布局
      * @return int
@@ -53,7 +54,7 @@ class SlideshowFragment : BaseRefreshFragment<SellFragmentPresenter, SellModel>(
             refresh.isRefreshing=false
         }
 
-        mAdapter?.setOnItemChildClickListener { adapter, view, position ->
+        mAdapter?.setOnItemClickListener { adapter, view, position ->
 
             val sellId= mSellList[position].id
             //TODO

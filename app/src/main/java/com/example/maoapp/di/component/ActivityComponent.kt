@@ -19,5 +19,6 @@ interface ActivityComponent {
     fun inject(activity:WriteActivity)
     fun inject(activity:CommodityActivity)
     fun inject(activity:OrderActivity)
+    fun inject(activity:OrderDetailActivity)
 
 }

@@ -54,4 +54,14 @@ interface LoginService {
     @FormUrlEncoded
     @POST("/postandroidbuildorder")
     fun buildOrder(@Field("goodId")goodId:Long,@Field("storeId")storeId:Long,@Field("storeName")storeName:String,@Field("name")name:String,@Field("userId")userId:Long,@Field("userName")userName:String,@Field("userPhone")userPhone:String,@Field("userAddress")userAddress:String,@Field("imagePath")imagePath:String,@Field("price")price:Float,@Field("number")number:Int,@Field("totalPrice")totalPrice:Float):Flowable<ResultNoDataBean>
+
+    @GET("/getandroidmyorder")
+    fun getOrdersByUserId(@Query("userId")userId: Long):Flowable<OrdersBean>
+
+    @GET("/getandroidorderdetail")
+    fun getOrderByOrderId(@Query("orderId")orderId:Long):Flowable<OrderBean>
+
+    @FormUrlEncoded
+    @POST("/postandroidorderstatus")
+    fun updateOrderStatus(@Field("orderId")orderId:Long):Flowable<ResultNoDataBean>
 }
