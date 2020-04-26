@@ -38,10 +38,10 @@ class OrderActivity : BaseInjectActivity<OrderConfirmPresenter>(), OrderConfirmC
     private fun initListener(){
 
         order_add.setOnClickListener{
-            var number=order_number.text.toString() as Int
+            var number=order_number.text.toString().toInt()
             number += 1
-            var price=order_price.text.toString() as Float
-            var totalPrice=order_total.text.toString() as Float
+            var price=order_price.text.toString().toFloat()
+            var totalPrice=order_total.text.toString().toFloat()
             totalPrice=price * number
             order_number.text=number.toString()
             order_total.text=totalPrice.toString()
@@ -49,14 +49,14 @@ class OrderActivity : BaseInjectActivity<OrderConfirmPresenter>(), OrderConfirmC
         }
 
         order_minus.setOnClickListener {
-            var number=order_number.text.toString() as Int
+            var number=order_number.text.toString().toInt()
             if (number == 1){
                 order_minus.visibility=View.INVISIBLE
             }else{
                 order_minus.visibility=View.VISIBLE
                 number -= 1
-                var price=order_price.text.toString() as Float
-                var totalPrice=order_total.text.toString() as Float
+                var price=order_price.text.toString().toFloat()
+                var totalPrice=order_total.text.toString().toFloat()
                 totalPrice=price * number
                 order_number.text=number.toString()
                 order_total.text=totalPrice.toString()

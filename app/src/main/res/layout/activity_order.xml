@@ -102,7 +102,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="@dimen/dp_40">
+        android:paddingLeft="@dimen/dp_40">
 
         <ImageView
             android:id="@+id/order_image"
@@ -166,8 +166,9 @@
                     android:id="@+id/order_minus"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:background="#DDD2D2"
                     android:layout_marginLeft="30dp"
+                    android:background="#DDD2D2"
+                    android:scaleType="center"
                     app:srcCompat="@drawable/minus_pic">
 
                 </ImageButton>
@@ -191,7 +192,7 @@
                     android:layout_height="30dp"
                     android:layout_marginLeft="20dp"
                     android:background="#DDD2D2"
-                    android:scaleType="centerInside"
+                    android:scaleType="center"
                     app:srcCompat="@drawable/add_pic"></ImageButton>
 
 

@@ -41,7 +41,7 @@ class OrderAdapter(data: List<OrderModel>) : BaseQuickAdapter<OrderModel, BaseVi
                     textView.visibility=View.VISIBLE
                 }
 
-                addOnClickListener(R.id.order_delivery_submit)
+                helper.addOnClickListener(R.id.order_delivery_submit)
                 }
 
 

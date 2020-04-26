@@ -2,18 +2,18 @@ package com.example.maoapp.ui.order
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.maoapp.MainActivity
 import com.example.maoapp.R
 import com.example.maoapp.adapter.OrderAdapter
 import com.example.maoapp.base.BaseRefreshFragment
 import com.example.maoapp.contract.MineOrderFragmentContract
 import com.example.maoapp.model.bean.OrderModel
 import com.example.maoapp.presenter.MineOrderFragmentPresenter
+import com.example.maoapp.ui.activity.OrderDetailActivity
 import com.example.maoapp.utils.ToastUtils
 import kotlinx.android.synthetic.main.common_refresh_recycler.*
-import kotlinx.android.synthetic.main.layout_order_card.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -38,18 +38,21 @@ class MineOrderFragment : BaseRefreshFragment<MineOrderFragmentPresenter, OrderM
 
     override fun initInject() = fragmentComponent.inject(this)
     override fun initSetListener() {
-        mAdapter?.setOnItemChildClickListener { adapter, view, position ->
-            val intent= Intent(context, MainActivity::class.java)
+        mAdapter?.setOnItemClickListener { adapter, view, position ->
+            Log.d("TAAAAAAAAAAA","WWWWW")
+            val intent= Intent(activity, OrderDetailActivity::class.java)
             intent.putExtra("orderId",mOrdersList[position].id)
             startActivity(intent) }
         mAdapter?.setOnItemChildClickListener { adapter, view, position ->
-            when(view){
-                order_delivery_submit -> {
+            Log.d("TAAAAAAAAAAA","HHHHHHHHH")
+            when(view.id){
+                R.id.order_delivery_submit -> {
                     mPosition=position
                     mPresenter.updateStatus(mOrdersList[position].id)
                 }
             }
         }
+
     }
     override fun initDatas() {
         mAdapter = OrderAdapter(mOrdersList)
@@ -62,6 +65,7 @@ class MineOrderFragment : BaseRefreshFragment<MineOrderFragmentPresenter, OrderM
         mPresenter.getOrders(userId)
     }
     override fun setOrders(orders: List<OrderModel>) {
+        mOrdersList.clear()
         mOrdersList.addAll(orders)
         finishTask()
     }
