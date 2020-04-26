@@ -24,7 +24,7 @@ class SellAdapter(data: List<SellModel>) : BaseQuickAdapter<SellModel, BaseViewH
                     .attach()
                 setText(R.id.sell_intro,item.introduction)
                 setText(R.id.sell_name,item.name)
-                setText(R.id.sell_number,item.monthSell)
+                setText(R.id.sell_number,item.monthSell.toString())
                 setText(R.id.sell_price,item.price.toString())
 
             }}

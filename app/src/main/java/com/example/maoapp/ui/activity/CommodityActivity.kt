@@ -12,6 +12,7 @@ import com.example.maoapp.base.BaseInjectActivity
 import com.example.maoapp.contract.CommodityContract
 import com.example.maoapp.model.bean.BannerItem
 import com.example.maoapp.model.bean.SellModel
+import com.example.maoapp.network.support.ApiConstants
 import com.example.maoapp.presenter.CommodityPresenter
 import com.example.maoapp.utils.ToastUtils
 import com.geek.banner.loader.BannerEntry
@@ -29,8 +30,7 @@ class CommodityActivity :  BaseInjectActivity<CommodityPresenter>(), CommodityCo
 
        val intent=intent
         val id=intent.getLongExtra("storeId",1)
-//        mPresenter.getSellById(id)
-        initData()
+        mPresenter.getSellById(id)
         initBanner()
         initListener()
     }
@@ -90,16 +90,22 @@ class CommodityActivity :  BaseInjectActivity<CommodityPresenter>(), CommodityCo
     private fun initData(){
         if (!mSellModel?.imageOne.isNullOrBlank()){
 
-            mData.add(BannerItem(mSellModel?.imageOne,""))
+            mData.add(BannerItem(ApiConstants.QINIU_URL+mSellModel?.imageOne,""))
         }
         if (!mSellModel?.imageTwo.isNullOrBlank()){
 
-            mData.add(BannerItem(mSellModel?.imageTwo,""))
+            mData.add(BannerItem(ApiConstants.QINIU_URL+mSellModel?.imageTwo,""))
         }
         if (!mSellModel?.imageThree.isNullOrBlank()){
 
-            mData.add(BannerItem(mSellModel?.imageThree,""))
+            mData.add(BannerItem(ApiConstants.QINIU_URL+mSellModel?.imageThree,""))
         }
+
+        commodity_name?.text=mSellModel?.name
+        commodity_price?.text=mSellModel?.price.toString()
+        commodity_description?.text=mSellModel?.description
+        commodity_store_name?.text=mSellModel?.storeName
+        commodity_store_phone?.text=mSellModel?.userPhone
 
         mData.add(BannerItem("http://q87u04f0o.bkt.clouddn.com/ea22d2ee-a3ad-4132-840a-5b075566ab89",""))
         mData.add(BannerItem("http://q87u04f0o.bkt.clouddn.com/ea22d2ee-a3ad-4132-840a-5b075566ab89",""))

@@ -1,5 +1,6 @@
 package com.example.maoapp
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -14,6 +15,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.maoapp.ui.activity.WriteActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
+import kotlinx.android.synthetic.main.nav_header_main.*
 
 class MainActivity : AppCompatActivity(){
 
@@ -42,6 +44,11 @@ class MainActivity : AppCompatActivity(){
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        val userProfile= getSharedPreferences("userProfile", Context.MODE_PRIVATE)
+
+        val userName=userProfile?.getString("userName","窝里横") as String
+        main_name?.text=userName
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
