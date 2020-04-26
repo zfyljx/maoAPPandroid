@@ -100,6 +100,7 @@ class OrderActivity : BaseInjectActivity<OrderConfirmPresenter>(), OrderConfirmC
 
         order_name.text=sell.name
         order_price.text=sell.price.toString()
+        order_total?.text=sell.price.toString()
 
     }
 

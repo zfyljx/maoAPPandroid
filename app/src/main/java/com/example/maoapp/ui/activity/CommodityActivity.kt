@@ -6,7 +6,6 @@ import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
-import com.example.maoapp.MainActivity
 import com.example.maoapp.R
 import com.example.maoapp.base.BaseInjectActivity
 import com.example.maoapp.contract.CommodityContract
@@ -37,7 +36,7 @@ class CommodityActivity :  BaseInjectActivity<CommodityPresenter>(), CommodityCo
 
     private fun initListener(){
         commodity_order_submit.setOnClickListener {
-            val intent=Intent(this,MainActivity::class.java)
+            val intent=Intent(this,OrderActivity::class.java)
             intent.putExtra("storeId",mSellModel?.id)
             startActivity(intent)
         }
@@ -88,6 +87,7 @@ class CommodityActivity :  BaseInjectActivity<CommodityPresenter>(), CommodityCo
 
 
     private fun initData(){
+        mData.clear()
         if (!mSellModel?.imageOne.isNullOrBlank()){
 
             mData.add(BannerItem(ApiConstants.QINIU_URL+mSellModel?.imageOne,""))
@@ -107,9 +107,9 @@ class CommodityActivity :  BaseInjectActivity<CommodityPresenter>(), CommodityCo
         commodity_store_name?.text=mSellModel?.storeName
         commodity_store_phone?.text=mSellModel?.userPhone
 
-        mData.add(BannerItem("http://q87u04f0o.bkt.clouddn.com/ea22d2ee-a3ad-4132-840a-5b075566ab89",""))
-        mData.add(BannerItem("http://q87u04f0o.bkt.clouddn.com/ea22d2ee-a3ad-4132-840a-5b075566ab89",""))
-        mData.add(BannerItem("http://q87u04f0o.bkt.clouddn.com/ea22d2ee-a3ad-4132-840a-5b075566ab89",""))
+//        mData.add(BannerItem("http://q87u04f0o.bkt.clouddn.com/ea22d2ee-a3ad-4132-840a-5b075566ab89",""))
+//        mData.add(BannerItem("http://q87u04f0o.bkt.clouddn.com/ea22d2ee-a3ad-4132-840a-5b075566ab89",""))
+//        mData.add(BannerItem("http://q87u04f0o.bkt.clouddn.com/ea22d2ee-a3ad-4132-840a-5b075566ab89",""))
 
 
     }
