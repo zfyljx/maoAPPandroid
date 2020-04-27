@@ -46,6 +46,9 @@ class OrderDetailActivity : BaseInjectActivity<OrderDetailPresenter>(), OrderDet
         detail_price.text=mOrder?.price.toString()
         detail_total.text=mOrder?.totalPrice.toString()
         detail_store_name.text=mOrder?.storeName
+        detail_user_name.text=mOrder?.userName
+        detail_user_phone.text=mOrder?.userPhone
+        detail_user_address.text=mOrder?.userAddress
         if (mOrder?.status == 1){
             detail_status.text="已收货"
         }else{

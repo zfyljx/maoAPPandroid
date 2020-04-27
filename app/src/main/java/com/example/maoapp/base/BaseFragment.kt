@@ -68,7 +68,6 @@ abstract class BaseFragment : RxFragment() {
         initWidget()
         initSetListener()
         finishCreateView(savedInstanceState)
-        initDatas()
     }
 
     protected open fun initSetListener() {

@@ -2,6 +2,7 @@ package com.example.maoapp.ui.activity
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -28,15 +29,20 @@ class CommodityActivity :  BaseInjectActivity<CommodityPresenter>(), CommodityCo
     override fun initWidget() {
 
        val intent=intent
+        val userProfile= getSharedPreferences("userProfile", Context.MODE_PRIVATE)
+
+        val goodId=userProfile?.getLong("goodId",0)
+        Log.d("id为",goodId.toString())
         val id=intent.getLongExtra("storeId",1)
-        mPresenter.getSellById(id)
-        initBanner()
+        goodId?.let { mPresenter.getSellById(it) }
+
         initListener()
     }
 
     private fun initListener(){
         commodity_order_submit.setOnClickListener {
             val intent=Intent(this,OrderActivity::class.java)
+            Log.d("TTTTTTTT",mSellModel?.id.toString())
             intent.putExtra("storeId",mSellModel?.id)
             startActivity(intent)
         }
@@ -100,16 +106,16 @@ class CommodityActivity :  BaseInjectActivity<CommodityPresenter>(), CommodityCo
 
             mData.add(BannerItem(ApiConstants.QINIU_URL+mSellModel?.imageThree,""))
         }
-
+        initBanner()
         commodity_name?.text=mSellModel?.name
         commodity_price?.text=mSellModel?.price.toString()
         commodity_description?.text=mSellModel?.description
         commodity_store_name?.text=mSellModel?.storeName
         commodity_store_phone?.text=mSellModel?.userPhone
 
-//        mData.add(BannerItem("http://q87u04f0o.bkt.clouddn.com/ea22d2ee-a3ad-4132-840a-5b075566ab89",""))
-//        mData.add(BannerItem("http://q87u04f0o.bkt.clouddn.com/ea22d2ee-a3ad-4132-840a-5b075566ab89",""))
-//        mData.add(BannerItem("http://q87u04f0o.bkt.clouddn.com/ea22d2ee-a3ad-4132-840a-5b075566ab89",""))
+//        mData.add(BannerItem("http://q87u04f0o.bkt.clouddn.com/e5fd2b4a-f5c1-4ab2-96fd-e9a3e437a793",""))
+//        mData.add(BannerItem("http://q87u04f0o.bkt.clouddn.com/0d22b896-c827-4589-8b92-aabf8ed12220",""))
+//        mData.add(BannerItem("http://q87u04f0o.bkt.clouddn.com/59f43004-66fe-45be-8008-c8473c1ece10",""))
 
 
     }

@@ -3,6 +3,7 @@ package com.example.maoapp.ui.activity
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import com.example.maoapp.MainActivity
@@ -27,11 +28,23 @@ class OrderActivity : BaseInjectActivity<OrderConfirmPresenter>(), OrderConfirmC
     override fun initInject()=activityComponent.inject(this)
     override fun initPresenter()=mPresenter.attachView(this)
 
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        Log.d("TTTTTTTTTTHHH",intent?.getLongExtra("storeId",0).toString())
+    }
+
     private var mSellModel: SellModel? = null
     override fun initWidget() {
         val intent= intent
         val id=intent.getLongExtra("storeId",1)
-        mPresenter.getSellById(id)
+        Log.d("HHHHHHH",intent.getLongExtra("storeId",1).toString())
+        val userProfile= getSharedPreferences("userProfile", Context.MODE_PRIVATE)
+
+        val goodId=userProfile?.getLong("goodId",0)
+        Log.d("id为",goodId.toString())
+        goodId?.let { mPresenter.getSellById(it) }
         initListener()
     }
 
@@ -78,7 +91,7 @@ class OrderActivity : BaseInjectActivity<OrderConfirmPresenter>(), OrderConfirmC
                         val userProfile= getSharedPreferences("userProfile", Context.MODE_PRIVATE)
                         val edit=userProfile?.edit()
                         val userId=userProfile?.getLong("userId",0) as Long
-                        mPresenter.buildOrder(mSellModel?.id as Long,mSellModel?.storeId as Long,mSellModel?.storeName as String,order_name.text.toString(),userId,order_name.text.toString(),order_user_phone.text.toString(),order_user_address.text.toString(),mSellModel?.imageOne as String,mSellModel?.price as Float,order_number.text.toString().toInt(),order_total.text.toString().toFloat())
+                        mPresenter.buildOrder(mSellModel?.id as Long,mSellModel?.storeId as Long,mSellModel?.storeName as String,order_name.text.toString(),userId,order_user_name.text.toString(),order_user_phone.text.toString(),order_user_address.text.toString(),mSellModel?.imageOne as String,mSellModel?.price as Float,order_number.text.toString().toInt(),order_total.text.toString().toFloat())
                     })
                     .setNegativeButton("取消", DialogInterface.OnClickListener { _, _ ->  })
                     .create().show()

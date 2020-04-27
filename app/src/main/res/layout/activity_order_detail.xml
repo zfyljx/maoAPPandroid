@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,6 +7,10 @@
     android:orientation="vertical"
     tools:context=".ui.activity.OrderDetailActivity">
 
+      <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
     <ImageView
         android:id="@+id/detail_image"
         android:paddingLeft="@dimen/dp20"
@@ -52,7 +56,7 @@
                 android:layout_gravity="center"
                 android:textColor="@color/colorDark"
                 android:layout_marginLeft="14dp"
-                android:text="123456856954568">
+                android:text="12345">
 
             </TextView>
 
@@ -63,7 +67,7 @@
             android:layout_height="wrap_content"
             android:text="猫粮名称"
             android:gravity="center"
-            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dp50"
             android:paddingTop="@dimen/dp14"
             android:textColor="@color/colorDark"
             android:textSize="@dimen/dp20">
@@ -74,9 +78,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="2020年4月20日19点29分"
-            android:gravity="center"
-            android:layout_gravity="center"
             android:paddingTop="@dimen/dp14"
+            android:layout_marginLeft="@dimen/dp50"
             android:textColor="@color/colorDark"
             android:textSize="@dimen/dp20">
 
@@ -92,10 +95,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/dp20"
-                android:gravity="center"
-                android:layout_gravity="center"
+
                 android:textColor="@color/colorDark"
-                android:layout_marginLeft="141dp"
+                android:layout_marginLeft="50dp"
                 android:text="17">
 
             </TextView>
@@ -138,7 +140,7 @@
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:textColor="@color/colorDark"
-                android:layout_marginLeft="141dp"
+                android:layout_marginLeft="50dp"
                 android:text="总价">
 
             </TextView>
@@ -180,7 +182,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:layout_marginLeft="110dp"
+                android:layout_marginLeft="50dp"
                 android:text="店铺"
                 android:textColor="@color/colorDark"
                 android:textSize="@dimen/dp20">
@@ -236,17 +238,17 @@
                         android:textColor="@color/colorDark"
                         android:layout_marginLeft="14dp"
                         android:text="窝里横"> </TextView>
-                    <TextView
-                        android:id="@+id/detail_user_phone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/dp20"
-                        android:gravity="center"
-                        android:textColor="@color/colorDark"
-                        android:layout_marginLeft="14dp"
-                        android:text="13262576795"> </TextView>
-                </LinearLayout>
 
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/detail_user_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/dp20"
+                    android:gravity="center"
+                    android:textColor="@color/colorDark"
+                    android:layout_marginLeft="14dp"
+                    android:text="13262576795"> </TextView>
                 <TextView
                     android:id="@+id/detail_user_address"
                     android:layout_width="wrap_content"
@@ -356,5 +358,6 @@
     </LinearLayout>
 
     </LinearLayout>
+    </ScrollView>
 
 

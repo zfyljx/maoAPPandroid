@@ -1,6 +1,8 @@
 package com.example.maoapp.ui.slideshow
 
+import android.content.Context
 import android.content.Intent
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.maoapp.R
 import com.example.maoapp.adapter.SellAdapter
@@ -57,6 +59,11 @@ class SlideshowFragment : BaseRefreshFragment<SellFragmentPresenter, SellModel>(
         mAdapter?.setOnItemClickListener { adapter, view, position ->
 
             val sellId= mSellList[position].id
+            Log.d("点击的id",sellId.toString())
+            val userProfile=activity?.getSharedPreferences("userProfile", Context.MODE_PRIVATE)
+            val edit=userProfile?.edit()
+            edit?.putLong("goodId",sellId)
+            edit?.apply()
             //TODO
             val intent =Intent(activity, CommodityActivity::class.java)
             intent.putExtra("sellId",sellId)
