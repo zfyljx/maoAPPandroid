@@ -49,4 +49,24 @@ class HomeFragmentPresenter@Inject constructor(private val mLoginHelper: LoginHe
             })
         addSubscribe(subscriber)
     }
+
+    override fun getSharesByUserId(userId: Long) {
+        val subscriber =mLoginHelper.getSharesByUserId(userId)
+            .compose(rxSchedulerHelper())
+            .subscribeWith(object : BaseSubscriber<SharesBean>(mView) {
+                override fun onSuccess(mData: SharesBean) {
+                    if (mData.status == 200){
+                        Log.d("HHHHHHHHHHHHHH",mData.data.toString())
+                        mView?.setShares(mData.data)
+                    }else{
+                        mView?.showToast("网络出错")
+                    }
+                }
+
+//                override fun onError(e: Throwable) {
+//                    mView?.showToast("网络出错,请刷新")
+//                }
+            })
+        addSubscribe(subscriber)
+    }
 }

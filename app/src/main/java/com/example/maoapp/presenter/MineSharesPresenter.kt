@@ -3,6 +3,7 @@ package com.example.maoapp.presenter
 import com.example.maoapp.base.BaseSubscriber
 import com.example.maoapp.base.RxPresenter
 import com.example.maoapp.contract.MineShareContract
+import com.example.maoapp.model.apiBean.ResultNoDataBean
 import com.example.maoapp.model.apiBean.SharesBean
 import com.example.maoapp.network.helper.LoginHelper
 import com.example.maoapp.utils.rxSchedulerHelper
@@ -24,6 +25,22 @@ class MineSharesPresenter@Inject constructor(private val mLoginHelper: LoginHelp
 
                 override fun onError(e: Throwable) {
                     mView?.showToast("网络出错,请刷新")
+                }
+            })
+        addSubscribe(subscriber)
+    }
+
+    override fun updateStatus(id: Long) {
+        val subscriber = mLoginHelper.updateSharesStatus(id)
+            .compose(rxSchedulerHelper())
+            .subscribeWith(object : BaseSubscriber<ResultNoDataBean>(mView) {
+                override fun onSuccess(mData: ResultNoDataBean) {
+                    if (mData.status == 200){
+                        mView?.verityStatus(true)
+                    }else{
+                        mView?.verityStatus(false)
+                    }
+
                 }
             })
         addSubscribe(subscriber)

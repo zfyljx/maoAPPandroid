@@ -8,7 +8,105 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/good_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:queryHint="@string/home_search">
+
+        </androidx.appcompat.widget.SearchView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:orientation="horizontal"
+            android:divider="@drawable/second_divider"
+            android:showDividers="middle"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/good_cat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorDark"
+                    android:textSize="20dp"
+                    android:text="猫粮"
+                    >
+
+                </TextView>
+                <ImageView
+                    android:id="@+id/good_cat_image"
+                    android:layout_width="42dp"
+                    android:layout_height="5dp"
+                    android:background="@color/darkOrange">
+
+                </ImageView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/good_dog"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorDark"
+                    android:textSize="20dp"
+                    android:text="狗粮"
+                    >
+
+                </TextView>
+                <ImageView
+                    android:id="@+id/good_dog_image"
+                    android:layout_width="42dp"
+                    android:layout_height="5dp"
+                    android:background="@color/darkOrange"
+                    android:visibility="invisible"
+                    >
+
+                </ImageView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/good_good"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorDark"
+                    android:textSize="20dp"
+                    android:text="猫狗用品"
+                    >
+
+                </TextView>
+                <ImageView
+                    android:id="@+id/good_good_image"
+                    android:layout_width="84dp"
+                    android:layout_height="5dp"
+                    android:background="@color/darkOrange"
+                    android:visibility="invisible">
+
+                </ImageView>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
 
         <include layout="@layout/common_refresh_recycler"></include>
 

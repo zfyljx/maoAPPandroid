@@ -12,15 +12,19 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.maoapp.network.support.ApiConstants
 import com.example.maoapp.ui.activity.WriteActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
+import com.liulishuo.qiniuimageloader.utils.PicassoLoader
+import com.qiniu.android.storage.UploadManager
 import kotlinx.android.synthetic.main.nav_header_main.*
 
 class MainActivity : AppCompatActivity(){
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-
+    private  val  uploadManager= UploadManager()
+    private val userImageUrl=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -48,6 +52,10 @@ class MainActivity : AppCompatActivity(){
         val userProfile= getSharedPreferences("userProfile", Context.MODE_PRIVATE)
 
         val userName=userProfile?.getString("userName","窝里横") as String
+        val userImage=userProfile?.getString("userImage","hhhhh") as String
+        val userUrl= ApiConstants.QINIU_URL+userImage
+        PicassoLoader.createLoader(main_image, userUrl)
+                                .attach()
         main_name?.text=userName
     }
 
@@ -61,4 +69,7 @@ class MainActivity : AppCompatActivity(){
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
+
+
 }

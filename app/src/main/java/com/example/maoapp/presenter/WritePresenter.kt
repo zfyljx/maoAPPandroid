@@ -27,8 +27,8 @@ class WritePresenter@Inject constructor(private val mLoginHelper: LoginHelper) :
 
     override fun getAdressDetail(longitude: String, latitude: String) {
         //TODO
-        //真机模拟
-        val subscriber = mLoginHelper.getAdressDetail("121.4235220000", "31.2601760000")
+        //真机模拟  双山"121.4235220000", "31.2601760000"
+        val subscriber = mLoginHelper.getAdressDetail("121.5541774000", "31.29381673000")
             .compose(rxSchedulerHelper())
             .subscribeWith(object : BaseSubscriber<LocationBean>(mView) {
                 override fun onSuccess(mData: LocationBean) {
@@ -54,9 +54,11 @@ class WritePresenter@Inject constructor(private val mLoginHelper: LoginHelper) :
         address: String,
         imageOne: String,
         imageTwo: String,
-        imageThree: String
+        imageThree: String,
+        classification:Int,
+        userImage:String
     ) {
-        val subscriber = mLoginHelper.upLoadShare(id,userName, message, address, imageOne, imageTwo, imageThree)
+        val subscriber = mLoginHelper.upLoadShare(id,userName, message, address, imageOne, imageTwo, imageThree,classification, userImage)
             .compose(rxSchedulerHelper())
             .subscribeWith(object : BaseSubscriber<ResultNoDataBean>(mView) {
                 override fun onSuccess(mData: ResultNoDataBean) {

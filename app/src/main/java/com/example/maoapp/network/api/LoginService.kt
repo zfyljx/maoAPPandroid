@@ -31,7 +31,7 @@ interface LoginService {
 
     @FormUrlEncoded
     @POST("/postandroidsaveshare")
-    fun saveShare(@Field("userId")id:Long,@Field("userName")userName: String,@Field("message")message:String,@Field("address")address:String,@Field("imageOne")imageOne:String,@Field("imageTwo")imageTwo:String,@Field("imageThree")imageThree:String):Flowable<ResultNoDataBean>
+    fun saveShare(@Field("userId")id:Long,@Field("userName")userName: String,@Field("message")message:String,@Field("address")address:String,@Field("imageOne")imageOne:String,@Field("imageTwo")imageTwo:String,@Field("imageThree")imageThree:String,@Field("classification")classification:Int,@Field("userImage")userImage:String):Flowable<ResultNoDataBean>
 
     @GET("/getandroidshares")
     fun getShares():Flowable<SharesBean>
@@ -64,4 +64,15 @@ interface LoginService {
     @FormUrlEncoded
     @POST("/postandroidorderstatus")
     fun updateOrderStatus(@Field("orderId")orderId:Long):Flowable<ResultNoDataBean>
+
+    @GET("/getandroidquerysells")
+    fun querySells(@Query("query")query:String):Flowable<SellsBean>
+
+    @GET("/getandroidusershares")
+    fun getSharesByUserId(userId: Long):Flowable<SharesBean>
+
+    @FormUrlEncoded
+    @POST("/postandroidsharestatus")
+    fun updateSharesStatus(@Field("id")id:Long):Flowable<ResultNoDataBean>
+
 }

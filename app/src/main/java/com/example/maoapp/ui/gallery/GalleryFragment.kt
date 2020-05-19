@@ -1,9 +1,10 @@
 package com.example.maoapp.ui.gallery
 
 import android.content.Context
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.maoapp.R
-import com.example.maoapp.adapter.HomeAdapter
+import com.example.maoapp.adapter.MyShareAdapter
 import com.example.maoapp.base.BaseRefreshFragment
 import com.example.maoapp.contract.MineShareContract
 import com.example.maoapp.model.bean.ShareModelList
@@ -18,7 +19,8 @@ class GalleryFragment :  BaseRefreshFragment<MineSharesPresenter, ShareModelList
      */
 
     private var mSharesList = ArrayList<ShareModelList.ShareModel>()
-    private var mAdapter : HomeAdapter? =null
+    private var mAdapter : MyShareAdapter? =null
+    private var mPosition=0
     override fun getLayoutId(): Int= R.layout.fragment_gallery
     override fun initPresenter() = mPresenter.attachView(this)
 
@@ -34,15 +36,34 @@ class GalleryFragment :  BaseRefreshFragment<MineSharesPresenter, ShareModelList
         ToastUtils.showToast(tag)
     }
 
+    override fun verityStatus(result: Boolean) {
+        if (result){
+            mSharesList[mPosition].status = 1
+            finishTask()
+        }else{
+            ToastUtils.showToast("网络出错，请重试")
+        }
+    }
+
     override fun initSetListener() {
         refresh.setOnRefreshListener {
             lazyLoadData()
             refresh.isRefreshing=false
         }
+
+        mAdapter?.setOnItemChildClickListener { adapter, view, position ->
+            Log.d("TAAAAAAAAAAA","HHHHHHHHH")
+            when(view.id){
+                R.id.order_delivery_submit -> {
+                    mPosition=position
+                    mPresenter.updateStatus(mSharesList[position].id)
+                }
+            }
+        }
     }
 
     override fun initDatas() {
-        mAdapter = HomeAdapter(mSharesList)
+        mAdapter = MyShareAdapter(mSharesList)
         recycler?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
 //        mRecycler?.layoutManager=
         recycler?.adapter = mAdapter

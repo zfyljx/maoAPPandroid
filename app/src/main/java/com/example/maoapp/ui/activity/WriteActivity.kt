@@ -49,6 +49,7 @@ class WriteActivity : BaseInjectActivity<WritePresenter>(), WriteContract.View{
     private var firstImageUrl=""
     private var secondImageUrl=""
     private var threeImageUrl=""
+    private var classification=0
     companion object {
         const val WRITE_EXTERNAL_STORAGE = 1
         const val SELECT_IMAGE_ONE = 1
@@ -135,6 +136,18 @@ when(requestCode){
             verfyPermissionsToGallery()
         }
 
+        check_cat.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked){
+                classification=0
+            }
+        }
+
+        check_status.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked){
+                classification=1
+            }
+        }
+
 
 
 
@@ -172,7 +185,8 @@ when(requestCode){
             val edit=userProfile.edit()
             val userId=userProfile.getLong("userId",0)
             val userName=userProfile.getString("userName","窝里横") as String
-            mPresenter.uploadShare(userId,userName,write_text.text.toString().trim(),write_address.text.toString().trim(),firstImageUrl,secondImageUrl,threeImageUrl)
+            val userImage=userProfile.getString("userImage","hhhhhhh") as String
+            mPresenter.uploadShare(userId,userName,write_text.text.toString().trim(),write_address.text.toString().trim(),firstImageUrl,secondImageUrl,threeImageUrl,classification,userImage)
         }
     }
 
@@ -214,7 +228,7 @@ when(requestCode){
                              * @param info     上传完成返回日志信息
                              * @param response 上传完成的回复内容
                              */
-                            Log.d("TTTTTTTT",info.toString())
+                            Log.d("TTTTTTTT",key)
                             if (info.statusCode == 200){
                                 when(selectImage){
                                     SELECT_IMAGE_ONE ->{

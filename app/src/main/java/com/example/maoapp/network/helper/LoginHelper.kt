@@ -17,7 +17,7 @@ class LoginHelper(private val mLoginService: LoginService) {
 
     fun getAdressDetail(longitude:String,latitude:String):Flowable<LocationBean> = mLoginService.getAddressDetail(longitude, latitude)
 
-    fun upLoadShare(id:Long,userName: String,message:String,address:String,imageOne:String,imageTwo:String,imageThree:String):Flowable<ResultNoDataBean> = mLoginService.saveShare(id,userName, message, address, imageOne, imageTwo, imageThree)
+    fun upLoadShare(id:Long,userName: String,message:String,address:String,imageOne:String,imageTwo:String,imageThree:String,classification:Int,userImage:String):Flowable<ResultNoDataBean> = mLoginService.saveShare(id,userName, message, address, imageOne, imageTwo, imageThree,classification, userImage)
 
     fun getShares():Flowable<SharesBean> =mLoginService.getShares()
 
@@ -39,4 +39,10 @@ class LoginHelper(private val mLoginService: LoginService) {
     fun getOrder(orderId:Long):Flowable<OrderBean> = mLoginService.getOrderByOrderId(orderId)
 
     fun updateOrder(orderId: Long):Flowable<ResultNoDataBean> = mLoginService.updateOrderStatus(orderId)
+
+    fun querySells(query:String):Flowable<SellsBean> = mLoginService.querySells(query)
+
+    fun getSharesByUserId(userId: Long):Flowable<SharesBean> =mLoginService.getSharesByUserId(userId)
+
+    fun updateSharesStatus(id: Long):Flowable<ResultNoDataBean> = mLoginService.updateSharesStatus(id)
 }

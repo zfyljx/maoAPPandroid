@@ -5,7 +5,7 @@ import com.example.maoapp.model.bean.SellModel
 import com.example.maoapp.model.bean.ShareModelList
 
 data class UserApiBean(val status:Int,val message:String,val data: User){
-    data class User(val id:Long,val userName:String,val phoneNumber:String,val password:String,val gender:Int,val description:String)
+    data class User(val id:Long,val userName:String,val phoneNumber:String,val password:String,val gender:Int,val description:String,val userImage:String)
 }
 
 

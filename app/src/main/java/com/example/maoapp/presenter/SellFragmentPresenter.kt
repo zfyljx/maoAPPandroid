@@ -30,4 +30,24 @@ class SellFragmentPresenter@Inject constructor(private val mLoginHelper: LoginHe
             })
         addSubscribe(subscriber)
     }
+
+    override fun querySells(query: String) {
+        val subscriber =mLoginHelper.querySells(query)
+            .compose(rxSchedulerHelper())
+            .subscribeWith(object : BaseSubscriber<SellsBean>(mView) {
+                override fun onSuccess(mData: SellsBean) {
+                    if (mData.status == 200){
+                        Log.d("HHHHHHHHHHHHHH",mData.data.toString())
+                        mView?.setSells(mData.data)
+                    }else{
+                        mView?.showToast("没有新商品")
+                    }
+                }
+
+//                override fun onError(e: Throwable) {
+//                    mView?.showToast("网络出错,请刷新")
+//                }
+            })
+        addSubscribe(subscriber)
+    }
 }

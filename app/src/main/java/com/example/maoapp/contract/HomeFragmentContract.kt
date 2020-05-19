@@ -12,5 +12,6 @@ interface HomeFragmentContract {
     interface Presenter<in T> : BaseContract.BasePresenter<T> {
         fun getShares()
         fun queryShares(query:String)
+        fun getSharesByUserId(userId:Long)
     }
 }

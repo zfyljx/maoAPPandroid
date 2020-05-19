@@ -65,6 +65,7 @@ class LoginActivity : BaseInjectActivity<LoginPresenter>(), LoginContract.View{
             val edit=userProfile.edit()
             edit.putLong("userId",tag.data.id)
             edit.putString("userName",tag.data.userName)
+            edit.putString("userImage",tag.data.userImage)
             edit.putString("phoneNumber",tag.data.phoneNumber)
             edit.putString("description",tag.data.description)
             edit.apply()

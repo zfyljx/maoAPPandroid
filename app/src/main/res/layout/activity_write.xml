@@ -59,17 +59,44 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="20dp"
+        >
+
+        <CheckBox
+            android:id="@+id/check_cat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="流浪猫信息"
+            >
+
+        </CheckBox>
+
+        <CheckBox
+            android:id="@+id/check_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="状态">
+
+        </CheckBox>
+
+    </LinearLayout>
+
+
     <EditText
         android:id="@+id/write_text"
         android:layout_width="match_parent"
-        android:layout_height="264dp"
-        android:textSize="20dp"
-        android:lines="9"
-        android:textColor="@color/colorDark"
+        android:layout_height="200dp"
         android:background="@drawable/bg_border"
         android:cursorVisible="true"
         android:inputType="textMultiLine"
-        android:textCursorDrawable="@drawable/color_cursor"></EditText>
+        android:lines="9"
+        android:textColor="@color/colorDark"
+        android:textCursorDrawable="@drawable/color_cursor"
+        android:textSize="20dp"></EditText>
 
     <RelativeLayout
         android:layout_width="match_parent"

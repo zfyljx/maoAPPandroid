@@ -21,7 +21,7 @@ class HomeFragment : BaseRefreshFragment<HomeFragmentPresenter, ShareModelList.S
 
     private var mSharesList = ArrayList<ShareModelList.ShareModel>()
     private var mAdapter :HomeAdapter? =null
-
+    private var mPosition=0
     override fun getLayoutId(): Int = R.layout.fragment_home
     override fun initPresenter() = mPresenter.attachView(this)
 
@@ -92,6 +92,16 @@ class HomeFragment : BaseRefreshFragment<HomeFragmentPresenter, ShareModelList.S
         refresh.setOnRefreshListener {
             lazyLoadData()
             refresh.isRefreshing=false
+        }
+
+        mAdapter?.setOnItemChildClickListener { adapter, view, position ->
+            Log.d("TAAAAAAAAAAA","HHHHHHHHH")
+            when(view.id){
+                R.id.order_delivery_submit -> {
+                    mPosition=position
+                    mPresenter.getSharesByUserId(mSharesList[position].userId)
+                }
+            }
         }
     }
 
