@@ -53,9 +53,12 @@ class MainActivity : AppCompatActivity(){
 
         val userName=userProfile?.getString("userName","窝里横") as String
         val userImage=userProfile?.getString("userImage","hhhhh") as String
-        val userUrl= ApiConstants.QINIU_URL+userImage
-        PicassoLoader.createLoader(main_image, userUrl)
-                                .attach()
+        if (!userImage.isNullOrEmpty()){
+            val userUrl= ApiConstants.QINIU_URL+userImage
+            PicassoLoader.createLoader(main_image, userUrl)
+                .attach()
+        }
+
         main_name?.text=userName
     }
 
